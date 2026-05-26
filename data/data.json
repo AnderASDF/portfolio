@@ -90,7 +90,7 @@
         "label": "Play on Roblox ↗",
         "url": "https://www.roblox.com/games/119050089766144/GHOSTED-Stregone-Cerca"
       },
-      "visible": true,
+      "visible": false,
       "showInTimeline": true,
       "inSelection": true
     },
@@ -102,26 +102,16 @@
       "team": "Personal",
       "tags": [
         "Dark Fantasy",
-        "Worldbuilding"
+        "Worldbuilding",
+        "hand-painted"
       ],
       "filterTags": "",
       "cardSize": null,
-      "coverImage": "rkn_char_1",
+      "coverImage": "",
       "sub": "Personal IP · 2023 – Present · Photoshop, Procreate, Blender",
       "cardDesc": "Self-directed dark fantasy IP — characters, demons, living bio-mechanical weapons and environmental props.",
       "description": "RKN is a self-directed dark fantasy IP built as a world-building exercise and design portfolio. The project started with a demon boss design and expanded into a full cast of characters, a set of living bio-mechanical weapons, creature designs, and environmental props. Every element follows a silhouette-first pipeline: thumbnail exploration → refined silhouettes → line art → colour final. The 3D props were modelled in Blender and textured in Photoshop.",
-      "images": [
-        "rkn_char_1",
-        "rkn_char_2",
-        "rkn_char_3",
-        "rkn_char_4",
-        "rkn_char_5",
-        "rkn_weapon_1",
-        "rkn_weapon_2",
-        "rkn_weapon_3",
-        "rkn_prop",
-        "rkn_creature"
-      ],
+      "images": [],
       "tools": [
         "Photoshop",
         "Procreate",
@@ -134,7 +124,8 @@
         "url": "https://www.artstation.com/artwork/zPqKgm"
       },
       "visible": true,
-      "inSelection": true,
+      "inSelection": false,
+      "sectionAspectRatio": "auto",
       "showInTimeline": false,
       "subprojects": [
         {
@@ -150,30 +141,41 @@
             "data/images/sub_1779708234888/1779708629969_untitled.png"
           ],
           "tags": [],
-          "filterTags": "concept creature weapon",
-          "cardSize": "featured",
+          "filterTags": "concept creature 3d   ",
+          "cardSize": "default",
           "inSelection": true,
           "visible": true,
-          "description": "End-to-end design and 3D asset creation, covering the entire pipeline from initial concept art to final 3D modeling and texturing. The asset design follows a strict narrative constraint: every weapon and prop is structurally derived from the anatomical remains and corrupted fragments of an ancient defeated demon."
+          "description": "End-to-end design and 3D asset creation, covering the entire pipeline from initial concept art to final 3D modeling and texturing. The asset design follows a strict narrative constraint: every weapon and prop is structurally derived from the anatomical remains and corrupted fragments of an ancient defeated demon.",
+          "tools": [
+            "Photoshop",
+            "Procreate",
+            "Blender"
+          ],
+          "sectionAspectRatio": "16/9"
         },
         {
           "id": "sub_1779708490933",
           "title": "Demon Character",
           "order": 2,
-          "coverImage": "data/images/sub_1779708490933/1779708554799_Cover.png",
+          "coverImage": "data/images/sub_1779708490933/1779803517808_cover_rkn_demon.png",
           "images": [
-            "data/images/sub_1779708490933/1779708554799_Cover.png",
+            "data/images/sub_1779708490933/1779803517808_cover_rkn_demon.png",
             "data/images/sub_1779708490933/1779708575797_slide_3.png",
             "data/images/sub_1779708490933/1779708576400_slide_5.png",
             "data/images/sub_1779708490933/1779708576463_slide_6.png",
             "data/images/sub_1779708490933/1779708585189_slide_4.png"
           ],
           "tags": [],
-          "filterTags": "concept character creature",
-          "cardSize": "featured",
+          "filterTags": "concept character creature  ",
+          "cardSize": "default",
           "inSelection": true,
           "visible": true,
-          "description": ""
+          "description": "An ancient dark entity whose carcass serves as the project's physical matrix: its anatomical remains and corrupted tissues are directly repurposed into weapons and biological plagues.",
+          "tools": [
+            "Photoshop",
+            "Procreate"
+          ],
+          "sectionAspectRatio": "auto"
         },
         {
           "id": "sub_1779739945418",
@@ -187,11 +189,16 @@
             "data/images/sub_1779739945418/1779740031384_slide_4.png"
           ],
           "tags": [],
-          "filterTags": "concept character",
-          "cardSize": "featured",
+          "filterTags": "concept character  ",
+          "cardSize": "default",
           "inSelection": true,
           "visible": true,
-          "description": ""
+          "description": "",
+          "tools": [
+            "Photoshop",
+            "Procreate"
+          ],
+          "sectionAspectRatio": "auto"
         }
       ]
     },
@@ -207,17 +214,18 @@
         "Personal Work"
       ],
       "filterTags": "illustration",
-      "cardSize": "featured",
-      "coverImage": "illus_1",
+      "cardSize": "default",
+      "coverImage": "data/images/illustrations 2026/1779752825420_Mountain_.png",
       "sub": "Personal work · Photoshop, Procreate",
       "cardDesc": "Atmospheric narrative scenes, vibrant pop character pieces, fan art and experimental studies — shared on ArtStation and Instagram.",
       "description": "A selection of personal illustration work exploring colour, mood, and stylized rendering techniques. The work spans atmospheric narrative scenes, vibrant pop character pieces, fan art, and experimental studies. These illustrations are shared on ArtStation and Instagram.",
       "images": [
-        "illus_1",
-        "illus_2",
-        "illus_26_1",
-        "illus_26_2",
-        "illus_26_3"
+        "data/images/illustrations 2026/1779752808697_Camping.png",
+        "data/images/illustrations 2026/1779752808857_Curator.png",
+        "data/images/illustrations 2026/1779752809121_Maelle.png",
+        "data/images/illustrations 2026/1779752809464_ML.png",
+        "data/images/illustrations 2026/1779752809595_Mountain_2.png",
+        "data/images/illustrations 2026/1779752825420_Mountain_.png"
       ],
       "tools": [
         "Photoshop",
@@ -225,9 +233,11 @@
         "Digital Painting"
       ],
       "link": null,
-      "showInTimeline": false,
       "visible": true,
-      "inSelection": true
+      "inSelection": true,
+      "sectionAspectRatio": "auto",
+      "showInTimeline": false,
+      "subprojects": []
     },
     {
       "id": "roblox",
@@ -257,7 +267,7 @@
         "Gameplay Prototyping"
       ],
       "link": null,
-      "visible": true,
+      "visible": false,
       "sectionAspectRatio": "auto",
       "inSelection": true,
       "showInTimeline": false,
@@ -265,7 +275,7 @@
     },
     {
       "id": "animatronics",
-      "title": "Bun Bun Band — Animatronics",
+      "title": "Pizzeria Tycoon",
       "date": "2024",
       "status": "released",
       "team": "Studio Neptune — Fortnite Creative / UEFN",
@@ -296,7 +306,9 @@
       "link": null,
       "visible": true,
       "inSelection": true,
-      "showInTimeline": true
+      "sectionAspectRatio": "auto",
+      "showInTimeline": true,
+      "subprojects": []
     },
     {
       "id": "charillus",
@@ -309,28 +321,65 @@
         "Illustration",
         "Stylized"
       ],
-      "filterTags": "illustration character",
-      "cardSize": "featured",
-      "coverImage": "char_illus_1",
+      "filterTags": "illustration",
+      "cardSize": "default",
+      "coverImage": "data/images/charillus/1779755407946_banner_gwen.png",
       "sub": "Character sheets & polished illustration",
       "cardDesc": "Game-ready character sheets with turnarounds to painterly finished pieces — originals and commissions.",
       "description": "Character illustration work covering a range of styles — from stylized game-ready character sheets with turnarounds to more painterly finished pieces. Includes original characters and commissions.",
       "images": [
-        "char_illus_1",
-        "char_illus_2",
-        "char_illus_3",
-        "char_illus_4",
-        "char_illus_5"
+        "data/images/charillus/1779755407946_banner_gwen.png",
+        "data/images/charillus/1779755349524_1779751292105_spiderGwen_etch.png"
       ],
       "tools": [
         "Photoshop",
-        "Procreate",
-        "Character Design"
+        "Procreate"
       ],
       "link": null,
-      "showInTimeline": false,
       "visible": true,
-      "inSelection": true
+      "inSelection": true,
+      "sectionAspectRatio": "auto",
+      "showInTimeline": false,
+      "subprojects": [
+        {
+          "id": "sub_1779750565727",
+          "title": "InkTober",
+          "order": 1,
+          "coverImage": "",
+          "images": [
+            "data/images/sub_1779750565727/1779750614188_Ink32_1.png",
+            "data/images/sub_1779750565727/1779750613849_Ink_23_2.png",
+            "data/images/sub_1779750565727/1779750613908_Ink_24.png"
+          ],
+          "tags": [],
+          "filterTags": "",
+          "cardSize": "default",
+          "inSelection": true,
+          "visible": true,
+          "description": "",
+          "tools": [],
+          "sectionAspectRatio": "auto"
+        },
+        {
+          "id": "sub_1779750633577",
+          "title": "Pokemon",
+          "order": 2,
+          "coverImage": "",
+          "images": [
+            "data/images/sub_1779750633577/1779754746062_1779750742860_greninja_mega.png",
+            "data/images/sub_1779750633577/1779750686250_Oolong_Oolongeist.png",
+            "data/images/sub_1779750633577/1779750686279_Oolong_Sinisthehe.png"
+          ],
+          "tags": [],
+          "filterTags": "",
+          "cardSize": "default",
+          "inSelection": true,
+          "visible": true,
+          "description": "",
+          "tools": [],
+          "sectionAspectRatio": "auto"
+        }
+      ]
     },
     {
       "id": "animals",
@@ -364,7 +413,7 @@
         "Environment Art"
       ],
       "link": null,
-      "visible": true,
+      "visible": false,
       "inSelection": true,
       "showInTimeline": false
     },
@@ -428,7 +477,7 @@
         "Environment Design"
       ],
       "link": null,
-      "visible": true,
+      "visible": false,
       "sectionAspectRatio": "auto",
       "inSelection": true,
       "showInTimeline": false,
@@ -459,7 +508,7 @@
         "Modular Design"
       ],
       "link": null,
-      "visible": true,
+      "visible": false,
       "inSelection": true,
       "showInTimeline": true
     },
@@ -487,7 +536,7 @@
         "Unreal Engine 5"
       ],
       "link": null,
-      "visible": true,
+      "visible": false,
       "inSelection": true,
       "showInTimeline": true
     },
@@ -518,7 +567,7 @@
         "Procreate"
       ],
       "link": null,
-      "visible": true,
+      "visible": false,
       "inSelection": true,
       "showInTimeline": false
     },
@@ -545,7 +594,7 @@
         "Procreate"
       ],
       "link": null,
-      "visible": true,
+      "visible": false,
       "inSelection": true,
       "showInTimeline": false
     }
@@ -559,7 +608,8 @@
       "bullets": [
         "Designing VFX and weapon concept sheets for an unreleased title in active production.",
         "Maintaining visual consistency across weapon systems in close collaboration with the art lead."
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "neptune",
@@ -816,28 +866,38 @@
       "label": "All",
       "tag": "all",
       "projectOrder": [
-        "rkn",
-        "new_1779155856406",
-        "roblox",
-        "backrooms",
-        "animatronics",
-        "animals",
+        "rkn__sub_1779708490933",
         "illustrations 2026",
+        "rkn__sub_1779708234888",
         "charillus",
-        "comune041",
-        "cloudpillars",
-        "pokeos",
-        "sketchbook"
+        "rkn__sub_1779739945418",
+        "animatronics"
       ],
+      "cardSizes": {
+        "rkn__sub_1779708490933": "featured",
+        "illustrations 2026": "default",
+        "rkn__sub_1779708234888": "default",
+        "charillus": "default",
+        "rkn__sub_1779739945418": "default",
+        "animatronics": "default"
+      },
       "visible": true
     },
     {
       "id": "concept",
       "label": "Concept Art",
       "tag": "concept",
-      "columns": 6,
-      "aspectRatio": "3/2",
-      "projectOrder": []
+      "projectOrder": [
+        "rkn__sub_1779739945418",
+        "rkn__sub_1779708490933",
+        "rkn__sub_1779708234888"
+      ],
+      "cardSizes": {
+        "rkn__sub_1779739945418": "default",
+        "rkn__sub_1779708490933": "featured",
+        "rkn__sub_1779708234888": "default"
+      },
+      "visible": true
     },
     {
       "id": "character",
@@ -902,6 +962,13 @@
       "columns": 6,
       "aspectRatio": "3/2",
       "projectOrder": []
+    },
+    {
+      "id": "view_1779753028812",
+      "label": "animation",
+      "tag": "animation",
+      "projectOrder": [],
+      "visible": true
     }
   ],
   "recruiterProfiles": [
@@ -915,18 +982,14 @@
         "3d"
       ],
       "projectOrder": [
-        "rkn",
-        "animatronics",
+        "rkn__sub_1779708490933",
+        "rkn__sub_1779739945418",
         "charillus",
-        "new_1779154077466",
-        "animals",
-        "backrooms",
-        "roblox",
-        "eventhorizon",
-        "indie",
-        "new_1779155856406",
+        "rkn__sub_1779708234888",
+        "animatronics",
         "illustrations 2026"
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "rp_creature",
@@ -1056,15 +1119,9 @@
         "illustrations 2026",
         "charillus",
         "rkn",
-        "new_1779154077466",
-        "animatronics",
-        "animals",
-        "eventhorizon",
-        "indie",
-        "backrooms",
-        "new_1779155856406",
-        "roblox"
-      ]
+        "animatronics"
+      ],
+      "visible": true
     }
   ],
   "gridSettings": {
@@ -1072,10 +1129,60 @@
     "aspectRatio": "3/2"
   },
   "socials": [
-    { "id": "email",      "label": "Email",       "href": "mailto:faneseandrea@gmail.com",          "title": "faneseandrea@gmail.com",    "iconType": "email" },
-    { "id": "artstation", "label": "ArtStation",  "href": "https://www.artstation.com/andrea_fanese","title": "ArtStation",                "iconType": "artstation", "target": "_blank" },
-    { "id": "linkedin",   "label": "LinkedIn",    "href": "https://www.linkedin.com/in/andrea-fanese","title": "LinkedIn",                 "iconType": "linkedin",   "target": "_blank" },
-    { "id": "twitter",    "label": "Twitter / X", "href": "https://x.com/andre_fnfn",               "title": "Twitter / X",               "iconType": "twitter",    "target": "_blank" },
-    { "id": "phone",      "label": "Phone",       "href": "tel:+393480443450",                      "title": "+39 348 044 3450",           "iconType": "phone" }
+    {
+      "id": "email",
+      "label": "Email",
+      "href": "mailto:faneseandrea@gmail.com",
+      "title": "faneseandrea@gmail.com",
+      "iconType": "email",
+      "iconFile": "data/images/social_email/1779748649480_Email.png",
+      "target": ""
+    },
+    {
+      "id": "artstation",
+      "label": "ArtStation",
+      "href": "https://www.artstation.com/andre-fn",
+      "title": "ArtStation",
+      "iconType": "artstation",
+      "iconFile": "data/images/social_artstation/1779748658464_ArtStation.png",
+      "target": "_blank"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/andrea-fanese",
+      "title": "LinkedIn",
+      "iconType": "linkedin",
+      "iconFile": "data/images/social_linkedin/1779748663903_Linkedin.png",
+      "target": "_blank"
+    },
+    {
+      "id": "twitter",
+      "label": "Twitter / X",
+      "href": "https://x.com/andre_fnfn",
+      "title": "Twitter / X",
+      "iconType": "twitter",
+      "iconFile": "data/images/social_twitter/1779748669483_Twitter.png",
+      "target": "_blank"
+    },
+    {
+      "id": "phone",
+      "label": "Phone",
+      "href": "tel:+393480443450",
+      "title": "+39 348 044 3450",
+      "iconType": "phone",
+      "iconFile": "data/images/social_phone/1779748676301_Phone.png",
+      "target": ""
+    },
+    {
+      "id": null,
+      "name": null,
+      "abbr": null,
+      "icon": "",
+      "iconColor": "",
+      "level": 0,
+      "category": null,
+      "visible": true
+    }
   ]
 }

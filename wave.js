@@ -32,12 +32,13 @@ window.WaveEffect = (function () {
 
   function init(canvas, opts) {
     opts = Object.assign({
-      baseY:     0.42,
-      colorTop:  'rgba(92,48,128,0.95)',
-      colorBot:  'rgba(15,4,30,1)',
-      wind:      1.6,
-      flowSpeed: 1.4,
-      tiltGain:  1.0
+      baseY:      0.42,
+      colorTop:   'rgba(92,48,128,0.95)',
+      colorBot:   'rgba(15,4,30,1)',
+      wind:       1.6,
+      flowSpeed:  1.4,
+      tiltGain:   1.0,
+      spawnRate:  null
     }, opts || {});
 
     const ctx = canvas.getContext('2d');
@@ -59,7 +60,7 @@ window.WaveEffect = (function () {
     }
 
     const tiltYAt = x => -Math.tan(tilt) * (x - W / 2);
-    const baseY   = ()  => H * opts.baseY;
+    const baseY   = ()  => H * (typeof opts.baseY === 'function' ? opts.baseY() : opts.baseY);
 
     function surfaceY(x) {
       let h = 0;
@@ -85,7 +86,7 @@ window.WaveEffect = (function () {
       nextSpawnIn -= dt;
       if (nextSpawnIn <= 0) {
         spawnWave();
-        nextSpawnIn = (0.5 + Math.random() * 1.1) / Math.max(0.4, opts.wind);
+        nextSpawnIn = (0.5 + Math.random() * 1.1) / Math.max(0.4, opts.spawnRate ?? opts.wind);
       }
     }
 

@@ -57,6 +57,14 @@ header{background:var(--purple);padding:0 20px;height:50px;display:flex;align-it
 .sb-sw-track:before{content:'';position:absolute;width:8px;height:8px;left:2px;top:2px;background:rgba(255,255,255,.25);border-radius:50%;transition:.15s}
 .sb-sw input:checked+.sb-sw-track{background:rgba(201,146,43,.18);border-color:var(--gold)}
 .sb-sw input:checked+.sb-sw-track:before{transform:translateX(12px);background:var(--gold)}
+/* Main / Sub segmented toggle */
+.pms-wrap{display:flex;gap:2px;margin-top:10px;}
+.pms-btn{padding:5px 14px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.35);transition:.15s;font-family:var(--mono);}
+.pms-btn.active{background:rgba(201,146,43,.18);color:var(--gold);border-color:var(--gold);}
+.pms-btn:hover:not(.active){color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.25);}
+/* legacy image key placeholder */
+.img-thumb.legacy-key{display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.12);}
+.img-thumb.legacy-key span{font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.3);word-break:break-all;padding:4px;text-align:center;line-height:1.4;}
 
 /* subproject items */
 .sb-expand{background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;padding:3px 4px;flex-shrink:0;line-height:0;border-radius:3px;transition:color .15s,opacity .15s,background .15s}
@@ -142,6 +150,8 @@ select option{background:var(--surface2)}
 .img-thumb img{width:100%;height:100%;object-fit:cover;display:block;background:var(--surface2)}
 .img-thumb .rm{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.75);border:none;color:var(--red);width:17px;height:17px;border-radius:50%;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;line-height:1}
 .img-thumb:hover .rm{opacity:1}
+.img-thumb.dragging{opacity:.3}
+.img-thumb.drag-over{outline:2px solid var(--gold);outline-offset:1px}
 .cover-lbl{position:absolute;bottom:0;left:0;right:0;background:rgba(201,146,43,.9);font-size:8px;text-align:center;padding:2px;color:#1A1225;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
 .upload-zone{border:1px dashed var(--border);border-radius:2px;padding:14px;text-align:center;cursor:pointer;transition:border-color .15s;margin-top:8px;font-size:12px;color:var(--gray)}
 .upload-zone:hover{border-color:var(--gold);color:var(--gold-l)}
@@ -191,6 +201,26 @@ input[type=range]:focus{outline:none;border-color:var(--gold)}
 .ftag-pill .drag-handle{color:rgba(255,255,255,.3);font-size:12px;line-height:1}
 .ftag-pill .rm-tag{background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:14px;line-height:1;padding:0;display:flex;align-items:center;margin-left:2px}
 .ftag-pill .rm-tag:hover{color:var(--red)}
+
+/* ── Cover visual preview grid ──────────────────────────────────────── */
+.cv-grid{display:grid;grid-template-columns:repeat(var(--cv-cols,6),1fr);gap:5px;margin-top:8px}
+.cv-item{position:relative;border-radius:2px;overflow:hidden;cursor:grab;border:2px solid transparent;transition:border-color .15s}
+.cv-item:active{cursor:grabbing}
+.cv-item.dragging{opacity:.3}
+.cv-item.drag-over{border-color:var(--gold)}
+.cv-item img{width:100%;height:100%;object-fit:cover;display:block;background:var(--surface2)}
+.cv-placeholder{width:100%;height:100%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gray);text-align:center;padding:4px}
+.cv-overlay{position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,.82));opacity:0;transition:opacity .15s;display:flex;flex-direction:column;justify-content:flex-end;padding:6px;gap:4px}
+.cv-item:hover .cv-overlay{opacity:1}
+.cv-name{font-size:9px;color:rgba(255,255,255,.85);line-height:1.3;flex:1}
+.cv-actions{display:flex;align-items:center;gap:4px}
+.cv-edit{background:var(--gold);color:var(--purple);border:none;font-size:9px;font-weight:700;padding:3px 7px;border-radius:1px;cursor:pointer;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
+.cv-edit:hover{background:var(--gold-l)}
+.cv-num{position:absolute;top:4px;left:5px;background:rgba(0,0,0,.65);color:rgba(255,255,255,.6);font-family:var(--mono);font-size:8px;padding:1px 4px;border-radius:1px;pointer-events:none}
+.cv-slots{display:flex;gap:2px;flex-shrink:0}
+.cv-slot-btn{background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-size:8px;font-family:var(--mono);width:18px;height:16px;border-radius:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .1s;padding:0}
+.cv-slot-btn.active{background:var(--gold);color:var(--purple);border-color:var(--gold)}
+.cv-slot-btn:hover:not(.active){border-color:var(--gold-l);color:var(--gold-l)}
 </style>
 </head>
 <body>
@@ -429,10 +459,10 @@ function writeToData(section, id, item) {
 
 // ── Collect form → item objects ───────────────────────────────────────────────
 function collectProjectItem(fd) {
-  // visible is managed by the sidebar switch and auto-saved; read from DATA or fallback
   const proj = DATA.projects.find(p=>p.id===curId)
-  const sbSw = document.querySelector(`#list-projects .sb-item[data-id="${curId}"] input[type=checkbox]`)
-  const visible = sbSw ? sbSw.checked : (proj?.visible ?? true)
+  const sbSw = document.querySelector(`#list-projects .sb-item[data-id="${curId}"] .sb-sw input`)
+  const visible     = sbSw ? sbSw.checked : (proj?.visible ?? true)
+  const inSelection = document.getElementById('sw-inSelection')?.checked ?? (proj?.inSelection ?? true)
   return {
     id: fd.get('id'),
     title: fd.get('title'),
@@ -450,8 +480,8 @@ function collectProjectItem(fd) {
     tools: getTags('tools-wrap'),
     link: fd.get('linkUrl') ? { label:fd.get('linkLabel'), url:fd.get('linkUrl') } : null,
     visible,
+    inSelection,
     sectionAspectRatio: fd.get('sectionAspectRatio') || 'auto',
-    inSelection:    document.getElementById('sw-inSelection')?.checked ?? true,
     showInTimeline: document.getElementById('sw-timeline')?.checked ?? false,
     subprojects:    proj?.subprojects || []
   }
@@ -472,12 +502,12 @@ function collectSkillItem(fd) {
 function collectViewItem(fd) {
   const item = (DATA.filterViews||[]).find(v=>v.id===curId)
   const sbSw = document.querySelector(`#list-views .sb-item[data-id="${curId}"] input[type=checkbox]`)
-  return { id:curId, label:fd.get('label'), tag:fd.get('tag'), projectOrder:getCoverOrder('cg-view'), visible: sbSw ? sbSw.checked : (item?.visible ?? true) }
+  return { id:curId, label:fd.get('label'), tag:fd.get('tag'), projectOrder:getCoverOrder('cg-view'), cardSizes:getCoverCardSizes('cg-view'), visible: sbSw ? sbSw.checked : (item?.visible ?? true) }
 }
 function collectProfileItem(fd) {
   const item = (DATA.recruiterProfiles||[]).find(r=>r.id===curId)
   const sbSw = document.querySelector(`#list-profiles .sb-item[data-id="${curId}"] input[type=checkbox]`)
-  return { id:curId, label:fd.get('label'), tag:fd.get('tag'), filterTags:getFilterTagOrder(), projectOrder:getCoverOrder('cg-profile'), visible: sbSw ? sbSw.checked : (item?.visible ?? true) }
+  return { id:curId, label:fd.get('label'), tag:fd.get('tag'), filterTags:getFilterTagOrder(), projectOrder:getCoverOrder('cg-profile'), cardSizes:getCoverCardSizes('cg-profile'), visible: sbSw ? sbSw.checked : (item?.visible ?? true) }
 }
 
 // ── Sidebar enable switch ─────────────────────────────────────────────────────
@@ -487,6 +517,27 @@ function sbSwitchHtml(section, id, isVisible, parentId) {
     <input type="checkbox"${isVisible?' checked':''} onchange="toggleVisible('${section}','${id}',this.checked${extra})">
     <span class="sb-sw-track"></span>
   </label>`
+}
+
+async function toggleInSelection(id, value) {
+  const proj = DATA.projects.find(p => p.id === id)
+  if (proj) { proj.inSelection = value; await postData() }
+  const key = `project:${id}`
+  if (PENDING[key]) PENDING[key].inSelection = value
+}
+
+async function setInSelectionMode(value) {
+  const projId = curSection === 'subproject' ? curParentId : curId
+  const proj = DATA.projects.find(p => p.id === projId)
+  if (!proj) return
+  proj.inSelection = value
+  const pk = `project:${projId}`
+  if (PENDING[pk]) PENDING[pk].inSelection = value
+  await postData()
+  renderSidebar()
+  document.querySelectorAll('.pms-btn').forEach((btn, i) => btn.classList.toggle('active', i === 0 ? value : !value))
+  const sw = document.getElementById('sw-inSelection')
+  if (sw) sw.checked = value
 }
 
 async function toggleVisible(section, id, value, parentId) {
@@ -537,7 +588,7 @@ function showTopbar(section, item) {
     const isEnabled = item?.visible !== false
     switchEl.innerHTML = `
       <div class="ftb-sw${isEnabled?'':' hidden'}" id="ftb-sw-all">
-        <span class="ftb-sw-label">All</span>
+        <span class="ftb-sw-label">Grid</span>
         <label class="switch"><input type="checkbox" id="sw-inSelection"${a?' checked':''} onchange="switchAutoSave('inSelection',this.checked)"><span class="switch-track"></span></label>
       </div>
       <div class="ftb-sw${isEnabled?'':' hidden'}" id="ftb-sw-timeline">
@@ -615,6 +666,7 @@ function editSubproject(parentId, subId) {
   _formModified=false
   document.getElementById('main').innerHTML=subprojectForm(parent, sub)
   document.getElementById('main').scrollTop=0
+  initImageDrag()
   showTopbar('subproject', sub)
   attachFormChangeListener()
   updateDirtyCount()
@@ -631,22 +683,29 @@ function newSubproject(parentId) {
   _formModified=false
   document.getElementById('main').innerHTML=subprojectForm(parent, blank)
   document.getElementById('main').scrollTop=0
+  initImageDrag()
   showTopbar('subproject', blank)
   attachFormChangeListener()
 }
 
 function subprojectForm(parent, sub) {
+  const parentInSel = parent.inSelection !== false
   const imgHtml=(sub.images||[]).map(img=>{
-    if(!img.startsWith('data/images/')) return ''
+    if(!img.startsWith('data/images/')) return `<div class="img-thumb legacy-key" data-img="${img}" title="${img}"><span>${img}</span><button class="rm" onclick="removeImage(event,'${img}')" type="button">×</button></div>`
     return `<div class="img-thumb${img===sub.coverImage?' cover':''}" onclick="setCover('${img}')" data-img="${img}">
       <img src="/${img}" onerror="this.style.opacity='.3'">
       <button class="rm" onclick="removeImage(event,'${img}')" type="button">×</button>
       ${img===sub.coverImage?'<div class="cover-lbl">cover</div>':''}
     </div>`
-  }).filter(Boolean).join('')
+  }).join('')
   const ALL_FILTER_TAGS=(DATA.filterViews||[]).filter(v=>v.id!=='all'&&v.tag).map(v=>v.tag)
   return `
-  <div class="form-head">${esc(sub.title)||'New Section'} <span style="font-size:13px;color:rgba(255,255,255,.3);font-family:var(--mono);font-weight:400">↳ ${esc(parent.title)}</span></div>
+  <div class="form-head">${esc(sub.title)||'New Section'} <span style="font-size:13px;color:rgba(255,255,255,.3);font-family:var(--mono);font-weight:400">↳ ${esc(parent.title)}</span>
+    <div class="pms-wrap">
+      <button type="button" class="pms-btn${parentInSel?' active':''}" onclick="setInSelectionMode(true)">Main Project</button>
+      <button type="button" class="pms-btn${!parentInSel?' active':''}" onclick="setInSelectionMode(false)">Sub Only</button>
+    </div>
+  </div>
   <form onsubmit="saveSubproject(event)">
     <div class="grid2">
       <div class="fg"><label>ID (slug)</label><input type="text" name="id" value="${esc(sub.id)}" required></div>
@@ -657,6 +716,7 @@ function subprojectForm(parent, sub) {
           <option value="default"${(sub.cardSize||'default')==='default'?' selected':''}>Default (1 col)</option>
           <option value="featured"${sub.cardSize==='featured'?' selected':''}>Featured (2 cols)</option>
           <option value="wide"${sub.cardSize==='wide'?' selected':''}>Wide (3 cols)</option>
+          <option value="vertical"${sub.cardSize==='vertical'?' selected':''}>Vertical (portrait)</option>
         </select>
       </div>
       <div class="fg full"><label>Display Tags <span style="opacity:.5">(added to parent tags in modal)</span></label>
@@ -672,9 +732,12 @@ function subprojectForm(parent, sub) {
     <div class="sec-label">Images</div>
     <p class="cover-hint">Click an image to set as cover.</p>
     <div class="img-grid" id="img-grid">${imgHtml}</div>
-    <div class="upload-zone" id="upload-zone">
-      <input type="file" id="img-input" accept="image/*" multiple onchange="uploadImages(this)">
-      <strong>Click to upload</strong> or drag &amp; drop
+    <div style="display:flex;gap:8px;align-items:stretch;margin-top:8px">
+      <div class="upload-zone" id="upload-zone" style="flex:1;margin-top:0">
+        <input type="file" id="img-input" accept="image/*" multiple onchange="uploadImages(this)">
+        <strong>Click to upload</strong> or drag &amp; drop
+      </div>
+      <button type="button" onclick="clearAllImages()" title="Delete all images" style="flex-shrink:0;background:none;border:1px solid rgba(248,113,113,.3);color:var(--red);border-radius:2px;padding:0 14px;font-size:11px;cursor:pointer;transition:background .15s;white-space:nowrap" onmouseover="this.style.background='rgba(248,113,113,.08)'" onmouseout="this.style.background='none'">× Clear all</button>
     </div>
     <input type="hidden" name="coverImage" id="cover-in" value="${esc(sub.coverImage||'')}">
     <input type="hidden" name="images" id="images-in" value="${esc(JSON.stringify(sub.images||[]))}">
@@ -746,6 +809,12 @@ async function gridSettingChange(field, value) {
   DATA.gridSettings[field] = value
   await postData()
   flashSaved('ftb-saved')
+  const grid = document.getElementById('cg-view') || document.getElementById('cg-profile')
+  if (grid) {
+    if (field==='columns') grid.style.setProperty('--cv-cols', value)
+    if (field==='aspectRatio') grid.style.setProperty('--cv-ratio', value)
+    updateCvGridRows(grid.id)
+  }
 }
 
 function saveCurrentItem() {
@@ -758,6 +827,7 @@ function renderSidebar() {
   document.getElementById('list-projects').innerHTML = DATA.projects.map(p => {
     const dirty   = !!PENDING[`project:${p.id}`]
     const enabled = p.visible !== false
+    const inSel   = p.inSelection !== false
     const hasSubs = (p.subprojects||[]).length > 0
     const expanded = _expandedProjects.has(p.id)
     const dotColor = p.status==='released'?'var(--green)':p.status==='unreleased'?'var(--red)':'rgba(255,255,255,.18)'
@@ -845,6 +915,7 @@ function openForm(section, item) {
   else if (section==='social')   main.innerHTML = socialForm(item)
   else                           main.innerHTML = skillForm(item)
   main.scrollTop = 0
+  if (section==='project') initImageDrag()
   showTopbar(section, item)
   attachFormChangeListener()
 }
@@ -879,18 +950,24 @@ function pills(arr) {
 }
 
 function projectForm(p) {
+  const inSel = p.inSelection !== false
   const imgHtml = (p.images||[]).map(img => {
-    if (!img.startsWith('data/images/')) return ''
+    if (!img.startsWith('data/images/')) return `<div class="img-thumb legacy-key" data-img="${img}" title="${img}"><span>${img}</span><button class="rm" onclick="removeImage(event,'${img}')" type="button">×</button></div>`
     return `<div class="img-thumb${img===p.coverImage?' cover':''}" onclick="setCover('${img}')" data-img="${img}">
       <img src="/${img}" onerror="this.style.opacity='.3'">
       <button class="rm" onclick="removeImage(event,'${img}')" type="button">×</button>
       ${img===p.coverImage?'<div class="cover-lbl">cover</div>':''}
     </div>`
-  }).filter(Boolean).join('')
+  }).join('')
   const ALL_FILTER_TAGS = (DATA.filterViews||[]).filter(v=>v.id!=='all'&&v.tag).map(v=>v.tag)
   const hasSubs = (p.subprojects||[]).length > 0
   return `
-  <div class="form-head">${esc(p.title)||'New Project'} ${p.status?`<span class="badge ${p.status}">${p.status}</span>`:''}</div>
+  <div class="form-head">${esc(p.title)||'New Project'} ${p.status?`<span class="badge ${p.status}">${p.status}</span>`:''}
+    <div class="pms-wrap">
+      <button type="button" class="pms-btn${inSel?' active':''}" onclick="setInSelectionMode(true)">Main Project</button>
+      <button type="button" class="pms-btn${!inSel?' active':''}" onclick="setInSelectionMode(false)">Sub Only</button>
+    </div>
+  </div>
   <form onsubmit="saveItem(event)">
     <div class="grid2">
       <div class="fg"><label>ID (slug)</label><input type="text" name="id" value="${esc(p.id)}" required></div>
@@ -905,17 +982,18 @@ function projectForm(p) {
       </div>
       <div class="fg"><label>Team / Company</label><input type="text" name="team" value="${esc(p.team)}"></div>
       <div class="fg"><label>Card Size</label>
-        <select name="cardSize"${hasSubs?' disabled style="opacity:.4" title="Card size is set per section"':''}>
+        <select name="cardSize"${(hasSubs&&!inSel)?' disabled style="opacity:.4" title="Card size is set per section when in Sub Only mode"':''}>
           <option value="default"${p.cardSize==='default'?' selected':''}>Default (1 col)</option>
           <option value="featured"${p.cardSize==='featured'?' selected':''}>Featured (2 cols)</option>
           <option value="wide"${p.cardSize==='wide'?' selected':''}>Wide (3 cols)</option>
+          <option value="vertical"${p.cardSize==='vertical'?' selected':''}>Vertical (portrait)</option>
         </select>
       </div>
       <div class="fg full"><label>Display Tags <span style="opacity:.5">(base — sections add their own)</span></label>
         <div class="tag-wrap" id="tags-wrap" onclick="focusTag('tags-in')">${pills(p.tags||[])}<input id="tags-in" type="text" placeholder="Add tag, press Enter…" onkeydown="addTag(event,'tags-wrap','tags-in')"></div>
       </div>
-      ${hasSubs
-        ? `<div class="fg full"><p class="cover-hint" style="margin:0;padding:8px 0;color:rgba(255,255,255,.3);font-family:var(--mono);font-size:10px;letter-spacing:.08em">Filter tags are managed per section — this project is hidden from the grid.</p></div>`
+      ${(hasSubs&&!inSel)
+        ? `<div class="fg full"><p class="cover-hint" style="margin:0;padding:8px 0;color:rgba(255,255,255,.3);font-family:var(--mono);font-size:10px;letter-spacing:.08em">Filter tags are managed per section when in Sub Only mode.</p></div>`
         : `<div class="fg full"><label>Filter Tags</label>
         <div class="ftag-wrap">${ALL_FILTER_TAGS.map(t=>{const on=(p.filterTags||'').split(' ').includes(t);return`<button type="button" class="ftag-chip${on?' active':''}" data-tag="${t}" onclick="this.classList.toggle('active')">${t}</button>`}).join('')}</div>
       </div>`
@@ -935,9 +1013,12 @@ function projectForm(p) {
     <div class="sec-label">Images</div>
     <p class="cover-hint">Click an image to set as cover (gold border). Legacy IMGS keys are not shown here.</p>
     <div class="img-grid" id="img-grid">${imgHtml}</div>
-    <div class="upload-zone" id="upload-zone">
-      <input type="file" id="img-input" accept="image/*" multiple onchange="uploadImages(this)">
-      <strong>Click to upload</strong> or drag &amp; drop &nbsp;·&nbsp; <span>JPEG, PNG, WebP</span>
+    <div style="display:flex;gap:8px;align-items:stretch;margin-top:8px">
+      <div class="upload-zone" id="upload-zone" style="flex:1;margin-top:0">
+        <input type="file" id="img-input" accept="image/*" multiple onchange="uploadImages(this)">
+        <strong>Click to upload</strong> or drag &amp; drop &nbsp;·&nbsp; <span>JPEG, PNG, WebP</span>
+      </div>
+      <button type="button" onclick="clearAllImages()" title="Delete all images" style="flex-shrink:0;background:none;border:1px solid rgba(248,113,113,.3);color:var(--red);border-radius:2px;padding:0 14px;font-size:11px;cursor:pointer;transition:background .15s;white-space:nowrap" onmouseover="this.style.background='rgba(248,113,113,.08)'" onmouseout="this.style.background='none'">× Clear all</button>
     </div>
     <input type="hidden" name="coverImage" id="cover-in" value="${esc(p.coverImage)}">
     <input type="hidden" name="images" id="images-in" value="${esc(JSON.stringify(p.images||[]))}">
@@ -1207,13 +1288,38 @@ function addThumb(p) {
   div.className = 'img-thumb'; div.dataset.img = p; div.onclick = () => setCover(p)
   div.innerHTML = `<img src="/${p}"><button class="rm" onclick="removeImage(event,'${p}')" type="button">×</button>`
   grid.appendChild(div)
+  initOneImageDrag(div)
   updateImagesIn()
 }
 function setCover(img) {
+  const ci = document.getElementById('cover-in')
+  if (ci?.value === img) {
+    document.querySelectorAll('.img-thumb').forEach(t=>{t.classList.remove('cover');t.querySelector('.cover-lbl')?.remove()})
+    ci.value = ''
+    _formModified = true; updateDirtyCount()
+    return
+  }
   document.querySelectorAll('.img-thumb').forEach(t=>{t.classList.remove('cover');t.querySelector('.cover-lbl')?.remove()})
   const th = document.querySelector(`.img-thumb[data-img="${img}"]`)
-  if (th) { th.classList.add('cover'); const l=document.createElement('div');l.className='cover-lbl';l.textContent='cover';th.appendChild(l) }
-  const ci = document.getElementById('cover-in'); if (ci) ci.value = img
+  if (th) {
+    th.classList.add('cover')
+    const l=document.createElement('div');l.className='cover-lbl';l.textContent='cover';th.appendChild(l)
+    const grid=document.getElementById('img-grid')
+    if (grid && grid.firstChild !== th) grid.insertBefore(th, grid.firstChild)
+  }
+  if (ci) ci.value = img
+  updateImagesIn()
+  _formModified = true; updateDirtyCount()
+}
+async function clearAllImages() {
+  const imgs = [...document.querySelectorAll('#img-grid .img-thumb')].map(t => t.dataset.img).filter(Boolean)
+  if (!imgs.length) return
+  if (!confirm(`Delete all ${imgs.length} image${imgs.length>1?'s':''}?`)) return
+  const uploads = imgs.filter(p => p.startsWith('data/images/'))
+  await Promise.all(uploads.map(p => fetch('/api/image',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:p})})))
+  document.getElementById('img-grid').innerHTML = ''
+  document.getElementById('cover-in').value = ''
+  document.getElementById('images-in').value = '[]'
   _formModified = true; updateDirtyCount()
 }
 async function removeImage(e, img) {
@@ -1251,6 +1357,7 @@ async function saveItem(e) {
   if (curSection==='project')       item = collectProjectItem(fd)
   else if (curSection==='career')   item = collectCareerItem(fd)
   else if (curSection==='timeline') item = collectTimelineItem(fd)
+  else if (curSection==='social')   item = collectSocialItem(fd)
   else                              item = collectSkillItem(fd)
   curId = item.id
   writeToData(curSection, item.id, item)
@@ -1320,6 +1427,29 @@ function initProjectDrag() {
   })
 }
 
+// ── Image grid drag-and-drop reorder ─────────────────────────────────────────
+let _imgDragThumb = null
+function initImageDrag() {
+  document.querySelectorAll('#img-grid .img-thumb').forEach(initOneImageDrag)
+}
+function initOneImageDrag(thumb) {
+  thumb.draggable = true
+  thumb.addEventListener('dragstart', e => { _imgDragThumb = thumb; thumb.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; e.stopPropagation() })
+  thumb.addEventListener('dragend', () => { thumb.classList.remove('dragging'); document.querySelectorAll('#img-grid .img-thumb').forEach(t => t.classList.remove('drag-over')) })
+  thumb.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); document.querySelectorAll('#img-grid .img-thumb').forEach(t => t.classList.remove('drag-over')); if (thumb !== _imgDragThumb) thumb.classList.add('drag-over') })
+  thumb.addEventListener('dragleave', () => thumb.classList.remove('drag-over'))
+  thumb.addEventListener('drop', e => {
+    e.preventDefault(); e.stopPropagation()
+    if (!_imgDragThumb || _imgDragThumb === thumb) return
+    const grid = document.getElementById('img-grid')
+    const thumbs = [...grid.querySelectorAll('.img-thumb')]
+    const from = thumbs.indexOf(_imgDragThumb), to = thumbs.indexOf(thumb)
+    if (from < to) grid.insertBefore(_imgDragThumb, thumb.nextSibling)
+    else grid.insertBefore(_imgDragThumb, thumb)
+    updateImagesIn(); _formModified = true; updateDirtyCount()
+  })
+}
+
 // ── Shared helpers ─────────────────────────────────────────────────────────────
 function cgThumb(p) {
   if (p.coverImage&&p.coverImage.startsWith('data/images/')) return '/'+p.coverImage
@@ -1330,30 +1460,84 @@ function cgThumb(p) {
 let _cgDragId = null
 function initCoverDrag(containerId) {
   const container=document.getElementById(containerId); if(!container) return
-  container.querySelectorAll('.cg-item').forEach(item=>{
+  container.querySelectorAll('.cv-item').forEach(item=>{
     item.addEventListener('dragstart', e=>{ _cgDragId=item.dataset.id; item.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; e.stopPropagation() })
-    item.addEventListener('dragend', ()=>{ item.classList.remove('dragging'); container.querySelectorAll('.cg-item').forEach(i=>i.classList.remove('drag-over')); updateCoverNumbers(containerId) })
-    item.addEventListener('dragover', e=>{ e.preventDefault(); e.stopPropagation(); container.querySelectorAll('.cg-item').forEach(i=>i.classList.remove('drag-over')); if(item.dataset.id!==_cgDragId)item.classList.add('drag-over') })
+    item.addEventListener('dragend', ()=>{ item.classList.remove('dragging'); container.querySelectorAll('.cv-item').forEach(i=>i.classList.remove('drag-over')); updateCoverNumbers(containerId) })
+    item.addEventListener('dragover', e=>{ e.preventDefault(); e.stopPropagation(); container.querySelectorAll('.cv-item').forEach(i=>i.classList.remove('drag-over')); if(item.dataset.id!==_cgDragId)item.classList.add('drag-over') })
     item.addEventListener('dragleave', ()=>item.classList.remove('drag-over'))
     item.addEventListener('drop', e=>{
       e.preventDefault(); e.stopPropagation()
       const tgtId=item.dataset.id; if(!_cgDragId||_cgDragId===tgtId) return
-      const items=[...container.querySelectorAll('.cg-item')]
+      const items=[...container.querySelectorAll('.cv-item')]
       const from=items.findIndex(i=>i.dataset.id===_cgDragId), to=items.findIndex(i=>i.dataset.id===tgtId)
       if(from<0||to<0) return
       const el=items[from]; container.removeChild(el)
-      const refreshed=[...container.querySelectorAll('.cg-item')]
+      const refreshed=[...container.querySelectorAll('.cv-item')]
       if(to>=refreshed.length) container.appendChild(el); else container.insertBefore(el,refreshed[to])
-      updateCoverNumbers(containerId); _formModified=true
+      updateCoverNumbers(containerId); _formModified=true; updateDirtyCount()
     })
   })
 }
 function updateCoverNumbers(containerId) {
-  document.getElementById(containerId)?.querySelectorAll('.cg-item').forEach((item,i)=>{const n=item.querySelector('.cg-num');if(n)n.textContent=i+1})
+  document.getElementById(containerId)?.querySelectorAll('.cv-item').forEach((item,i)=>{const n=item.querySelector('.cv-num');if(n)n.textContent=i+1})
 }
 function getCoverOrder(containerId) {
-  return [...document.getElementById(containerId).querySelectorAll('.cg-item')].map(i=>i.dataset.id)
+  return [...document.getElementById(containerId).querySelectorAll('.cv-item')].map(i=>i.dataset.id)
 }
+function getCoverSlotOverrides(containerId) {
+  const overrides={}
+  document.getElementById(containerId)?.querySelectorAll('.cv-item').forEach(i=>{
+    const s=parseInt(i.dataset.slots||'1'); if(s!==1) overrides[i.dataset.id]=s
+  })
+  return overrides
+}
+function cvItemHtml(p, index, slots) {
+  const thumb=cgThumb(p)
+  const name=p._parentTitle?`${p._parentTitle} › ${p.title}`:p.title
+  const editFn=p._parentId?`editSubproject('${p._parentId}','${p._subId}')`:`editItem('project','${p.id}')`
+  const s=slots||1
+  const slotsHtml=[1,2,3].map(n=>`<button type="button" class="cv-slot-btn${s===n?' active':''}" onclick="setCardSlots(this,${n})">${n}</button>`).join('')
+  return `<div class="cv-item" draggable="true" data-id="${esc(p.id)}" data-slots="${s}" style="grid-column:span ${s}">
+    ${thumb?`<img src="${thumb}" onerror="this.style.opacity='.3'">`:`<div class="cv-placeholder">${esc(name)}</div>`}
+    <span class="cv-num">${index+1}</span>
+    <div class="cv-overlay">
+      <div class="cv-name">${esc(name)}</div>
+      <div class="cv-actions">
+        <div class="cv-slots">${slotsHtml}</div>
+        <button class="cv-edit" type="button" onclick="event.stopPropagation();${editFn}">Edit</button>
+      </div>
+    </div>
+  </div>`
+}
+function setCardSlots(btn, n) {
+  const item=btn.closest('.cv-item'); if(!item) return
+  item.dataset.slots=n; item.style.gridColumn=`span ${n}`
+  item.querySelectorAll('.cv-slot-btn').forEach((b,i)=>b.classList.toggle('active',i+1===n))
+  _formModified=true; updateDirtyCount()
+}
+function getCoverCardSizes(containerId) {
+  const sizes={}
+  document.getElementById(containerId)?.querySelectorAll('.cv-item').forEach(i=>{
+    const s=parseInt(i.dataset.slots||'1')
+    sizes[i.dataset.id]=s===2?'featured':s===3?'wide':'default'
+  })
+  return sizes
+}
+function updateCvGridRows(containerId) {
+  const grid=document.getElementById(containerId); if(!grid||!grid.clientWidth) return
+  const gs=DATA.gridSettings||{}
+  const cols=gs.columns||6
+  const [rw,rh]=(gs.aspectRatio||'3/2').split('/').map(Number)
+  grid.style.gridAutoRows=Math.round(grid.clientWidth/cols*rh/rw)+'px'
+}
+let _cvResizeTimer=null
+window.addEventListener('resize',()=>{
+  clearTimeout(_cvResizeTimer)
+  _cvResizeTimer=setTimeout(()=>{
+    const id=document.getElementById('cg-view')?'cg-view':document.getElementById('cg-profile')?'cg-profile':null
+    if(id) updateCvGridRows(id)
+  },100)
+})
 function cgItemHtml(p, index) {
   const thumb=cgThumb(p)
   const name=p._parentTitle?`${p._parentTitle} › ${p.title}`:p.title
@@ -1445,6 +1629,7 @@ function editView(id) {
   document.getElementById('main').innerHTML=viewForm(v)
   document.getElementById('main').scrollTop=0
   showTopbar('view',v); initCoverDrag('cg-view'); attachFormChangeListener()
+  setTimeout(()=>updateCvGridRows('cg-view'),0)
 }
 function newView() {
   stashCurrentForm()
@@ -1455,18 +1640,21 @@ function newView() {
   document.getElementById('main').innerHTML=viewForm(blank)
   document.getElementById('main').scrollTop=0
   showTopbar('view',blank); initCoverDrag('cg-view'); attachFormChangeListener()
+  setTimeout(()=>updateCvGridRows('cg-view'),0)
 }
 function viewForm(v) {
-  // Expand: projects with subs → one card per visible subproject; without → parent card
+  const _cs = v.cardSizes || {}
+  const defaultSlots = c => _cs[c.id]==='featured'?2:_cs[c.id]==='wide'?3:1
   const allCards = []
   DATA.projects.filter(p=>p.visible!==false).forEach(p => {
     const subs=(p.subprojects||[]).filter(s=>s.visible!==false)
-    if (subs.length) {
+    if (subs.length && p.inSelection===false) {
       subs.forEach(sub => allCards.push({
         id:`${p.id}__${sub.id}`, title:sub.title, _parentTitle:p.title,
         _parentId:p.id, _subId:sub.id,
         coverImage:sub.coverImage, images:sub.images||[],
-        filterTags:sub.filterTags||'', inSelection:sub.inSelection!==false
+        filterTags:sub.filterTags||'', inSelection:sub.inSelection!==false,
+        cardSize:sub.cardSize||'default'
       }))
     } else {
       allCards.push(p)
@@ -1475,9 +1663,22 @@ function viewForm(v) {
   let viewCards=v.id==='all'
     ?allCards.filter(c=>c.inSelection!==false)
     :allCards.filter(c=>v.tag&&(c.filterTags||'').split(' ').includes(v.tag))
-  const order=v.projectOrder||[]
-  if (order.length) { const ordered=order.map(id=>viewCards.find(c=>c.id===id)).filter(Boolean); const rest=viewCards.filter(c=>!order.includes(c.id)); viewCards=[...ordered,...rest] }
-  const hint=v.id==='all'?'Showing projects/sections marked "Include in All". Drag to set display order.':`Showing projects tagged "${v.tag||'—'}". Drag to set display order.`
+  const rawOrder=v.projectOrder||[]
+  // Normalise legacy parent IDs → expanded composite IDs
+  const order=rawOrder.flatMap(id=>{
+    if (allCards.find(c=>c.id===id)) return [id]
+    const subs=allCards.filter(c=>c.id.startsWith(id+'__')); return subs.length?subs.map(c=>c.id):[id]
+  })
+  if (order.length) {
+    const ordered=order.map(id=>viewCards.find(c=>c.id===id)).filter(Boolean)
+    const rest=viewCards.filter(c=>!order.includes(c.id))
+    viewCards=[...ordered,...rest]
+  }
+  const cols=DATA.gridSettings?.columns||6
+  const ratio=DATA.gridSettings?.aspectRatio||'3/2'
+  const hint=v.id==='all'
+    ?'Showing projects/sections marked "Include in All". Drag to reorder — hover a card to set its column span (1 / 2 / 3).'
+    :`Showing projects tagged "${v.tag||'—'}". Drag to reorder — hover to set column span.`
   return `
   <div class="form-head">${esc(v.label)||'New View'}</div>
   <form onsubmit="saveView(event)">
@@ -1485,9 +1686,9 @@ function viewForm(v) {
       <div class="fg"><label>Label</label><input type="text" name="label" value="${esc(v.label)}" required oninput="updateHead(this.value);document.getElementById('ftb-title').textContent=this.value||'New View'"></div>
       <div class="fg"><label>Tag (filter key)</label><input type="text" name="tag" value="${esc(v.tag)}"${v.id==='all'?' readonly style="opacity:.5"':''}></div>
     </div>
-    <div class="sec-label">Project Order</div>
+    <div class="sec-label">Project Order &amp; Layout</div>
     <p class="cover-hint">${hint}</p>
-    <div class="cg-container" id="cg-view">${viewCards.map((p,i)=>cgItemHtml(p,i)).join('')}</div>
+    <div class="cv-grid" id="cg-view" style="--cv-cols:${cols};--cv-ratio:${ratio}">${viewCards.map((c,i)=>cvItemHtml(c,i,defaultSlots(c))).join('')}</div>
     ${v.id!=='all'?`<div class="actions"><button type="button" class="btn-del" onclick="deleteView()">Delete</button></div>`:''}
   </form>`
 }
@@ -1547,6 +1748,7 @@ function editProfile(id) {
   document.getElementById('main').innerHTML=profileForm(rp)
   document.getElementById('main').scrollTop=0
   showTopbar('profile',rp); initCoverDrag('cg-profile'); initFilterTagDrag(); attachFormChangeListener()
+  setTimeout(()=>updateCvGridRows('cg-profile'),0)
 }
 function newProfile() {
   stashCurrentForm()
@@ -1557,6 +1759,7 @@ function newProfile() {
   document.getElementById('main').innerHTML=profileForm(blank)
   document.getElementById('main').scrollTop=0
   showTopbar('profile',blank); initCoverDrag('cg-profile'); initFilterTagDrag(); attachFormChangeListener()
+  setTimeout(()=>updateCvGridRows('cg-profile'),0)
 }
 function profileForm(rp) {
   const ALL_TAGS=(DATA.filterViews||[]).filter(v=>v.id!=='all'&&v.tag).map(v=>v.tag)
@@ -1564,9 +1767,42 @@ function profileForm(rp) {
   const available=ALL_TAGS.filter(t=>!activeTags.includes(t))
   const pillsHtml=activeTags.map(t=>`<div class="ftag-pill" draggable="true" data-tag="${t}"><span class="drag-handle">⠿</span>${esc(t)}<button class="rm-tag" type="button" onclick="removeFilterTag(this)" title="Remove">×</button></div>`).join('')
   const availHtml=available.map(t=>`<button type="button" class="ftag-chip" data-tag="${t}" onclick="addFilterTagToProfile('${t}',this)">${t}</button>`).join('')
-  const allProjects=DATA.projects.filter(p=>p.visible!==false)
-  const order=rp.projectOrder||[]
-  let projs; if(order.length){const ordered=order.map(id=>allProjects.find(p=>p.id===id)).filter(Boolean);const rest=allProjects.filter(p=>!order.includes(p.id));projs=[...ordered,...rest]}else{projs=allProjects}
+  // Build expanded card list (same logic as viewForm)
+  const _cs = rp.cardSizes || {}
+  const defaultSlots = c => _cs[c.id]==='featured'?2:_cs[c.id]==='wide'?3:1
+  const allCards=[]
+  DATA.projects.filter(p=>p.visible!==false).forEach(p=>{
+    const subs=(p.subprojects||[]).filter(s=>s.visible!==false)
+    if (subs.length&&p.inSelection===false) {
+      subs.forEach(sub=>allCards.push({
+        id:`${p.id}__${sub.id}`,title:sub.title,_parentTitle:p.title,
+        _parentId:p.id,_subId:sub.id,
+        coverImage:sub.coverImage,images:sub.images||[],
+        filterTags:sub.filterTags||'',inSelection:sub.inSelection!==false,
+        cardSize:sub.cardSize||'default'
+      }))
+    } else { allCards.push(p) }
+  })
+  const rawOrder=rp.projectOrder||[]
+  // Normalise legacy parent IDs → expanded composite IDs
+  const order=rawOrder.flatMap(id=>{
+    if (allCards.find(c=>c.id===id)) return [id]
+    const subs=allCards.filter(c=>c.id.startsWith(id+'__')); return subs.length?subs.map(c=>c.id):[id]
+  })
+  let projs
+  if (order.length) {
+    const ordered=order.map(id=>allCards.find(c=>c.id===id)).filter(Boolean)
+    const rest=allCards.filter(c=>!order.includes(c.id))
+    projs=[...ordered,...rest]
+  } else if (activeTags.length) {
+    // Default: sort by filterTag priority, then DATA.projects order
+    const tagScore=c=>{ for(let i=0;i<activeTags.length;i++) if((c.filterTags||'').split(' ').includes(activeTags[i])) return i; return activeTags.length }
+    projs=[...allCards].sort((a,b)=>tagScore(a)-tagScore(b))
+  } else {
+    projs=allCards
+  }
+  const cols=DATA.gridSettings?.columns||6
+  const ratio=DATA.gridSettings?.aspectRatio||'3/2'
   return `
   <div class="form-head">${esc(rp.label)||'New Profile'}</div>
   <form onsubmit="saveProfile(event)">
@@ -1579,9 +1815,9 @@ function profileForm(rp) {
     <div class="ftag-order" id="ftag-order">${pillsHtml}</div>
     <p class="cover-hint" style="margin-top:10px">Add tags:</p>
     <div class="ftag-wrap ftag-avail">${availHtml}</div>
-    <div class="sec-label">Project Order for "All" view</div>
-    <p class="cover-hint">Order shown when this recruiter profile is active. Drag to reorder.</p>
-    <div class="cg-container" id="cg-profile">${projs.map((p,i)=>cgItemHtml(p,i)).join('')}</div>
+    <div class="sec-label">Project Order &amp; Layout</div>
+    <p class="cover-hint">Order shown when this recruiter profile is active. Drag to reorder — hover a card to set its column span (1 / 2 / 3). Default order: profile tags priority → admin project order.</p>
+    <div class="cv-grid" id="cg-profile" style="--cv-cols:${cols};--cv-ratio:${ratio}">${projs.map((c,i)=>cvItemHtml(c,i,defaultSlots(c))).join('')}</div>
     <div class="actions">
       <button type="button" class="btn-del" onclick="deleteProfile()">Delete</button>
     </div>

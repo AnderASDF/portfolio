@@ -1067,22 +1067,25 @@
       "filterTags": [
         "fortnite",
         "3d",
-        "creature",
-        "character"
+        "animation"
       ],
       "projectOrder": [
         "animatronics",
-        "backrooms",
-        "rkn",
-        "animals",
-        "new_1779154077466",
-        "indie",
+        "rkn__sub_1779708234888",
+        "rkn__sub_1779708490933",
+        "rkn__sub_1779739945418",
         "charillus",
-        "eventhorizon",
-        "new_1779155856406",
-        "illustrations 2026",
-        "roblox"
-      ]
+        "illustrations 2026"
+      ],
+      "cardSizes": {
+        "animatronics": "default",
+        "rkn__sub_1779708234888": "default",
+        "rkn__sub_1779708490933": "default",
+        "rkn__sub_1779739945418": "default",
+        "charillus": "default",
+        "illustrations 2026": "default"
+      },
+      "visible": true
     },
     {
       "id": "rp_roblox",
@@ -1091,21 +1094,25 @@
       "filterTags": [
         "roblox",
         "3d",
-        "character"
+        "animation"
       ],
       "projectOrder": [
-        "new_1779155856406",
-        "roblox",
         "animatronics",
-        "backrooms",
-        "animals",
-        "rkn",
-        "indie",
-        "new_1779154077466",
+        "rkn__sub_1779708234888",
+        "rkn__sub_1779708490933",
+        "rkn__sub_1779739945418",
         "charillus",
-        "eventhorizon",
         "illustrations 2026"
-      ]
+      ],
+      "cardSizes": {
+        "animatronics": "default",
+        "rkn__sub_1779708234888": "default",
+        "rkn__sub_1779708490933": "default",
+        "rkn__sub_1779739945418": "default",
+        "charillus": "default",
+        "illustrations 2026": "default"
+      },
+      "visible": true
     },
     {
       "id": "rp_illustration",

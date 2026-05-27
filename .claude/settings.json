@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const d = require\\('./data/data.js'\\); console.log\\(JSON.stringify\\(Object.keys\\(d || window?.PORTFOLIO_DATA || {}\\)\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.loads\\(sys.stdin.read\\(\\)[10:]\\); [print\\(s['id'], s.get\\('category'\\), s.get\\('icon',''\\)[:60]\\) for s in d]\")",
+      "Bash(node -e \"eval\\(require\\('fs'\\).readFileSync\\('data/data.js','utf8'\\).replace\\('window.PORTFOLIO_DATA','X='\\)\\);X.skills.forEach\\(s=>console.log\\(s.id,s.category,s.icon?.slice\\(0,60\\)\\)\\)\")",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

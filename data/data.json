@@ -702,7 +702,8 @@
       "name": "Character Design",
       "abbr": "",
       "icon": "data/images/skill_character_design/1779747825553_Characters.png",
-      "level": 95,
+      "iconColor": "#000000",
+      "level": 68,
       "category": "Concept Art",
       "visible": true
     },
@@ -711,7 +712,8 @@
       "name": "Weapon Design",
       "abbr": "Wp",
       "icon": "data/images/skill_weapon_design/1779747834664_Weapon.png",
-      "level": 92,
+      "iconColor": "#000000",
+      "level": 93,
       "category": "Concept Art",
       "visible": true
     },
@@ -720,7 +722,8 @@
       "name": "Creature Design",
       "abbr": "Cr",
       "icon": "data/images/skill_creature_design/1779747840634_Creatures.png",
-      "level": 85,
+      "iconColor": "#000000",
+      "level": 86,
       "category": "Concept Art",
       "visible": true
     },
@@ -729,7 +732,8 @@
       "name": "VFX Concept Art",
       "abbr": "Vx",
       "icon": "data/images/skill_vfx_concept/1779747846371_VFX.png",
-      "level": 82,
+      "iconColor": "#000000",
+      "level": 53,
       "category": "Concept Art",
       "visible": true
     },
@@ -738,7 +742,8 @@
       "name": "Environment",
       "abbr": "Ev",
       "icon": "data/images/skill_env_concept/1779747851972_Environments.png",
-      "level": 76,
+      "iconColor": "#000000",
+      "level": 5,
       "category": "Concept Art",
       "visible": true
     },
@@ -747,25 +752,28 @@
       "name": "Silhouette Ideation",
       "abbr": "Si",
       "icon": "data/images/skill_silhouette/1779747857587_Silhouette.png",
-      "level": 90,
+      "iconColor": "#000000",
+      "level": 94,
       "category": "Concept Art",
-      "visible": true
+      "visible": false
     },
     {
       "id": "worldbuilding",
       "name": "Worldbuilding",
       "abbr": "Wb",
       "icon": "data/images/skill_worldbuilding/1779747863201_Worldbuilding.png",
+      "iconColor": "#000000",
       "level": 80,
       "category": "Concept Art",
-      "visible": true
+      "visible": false
     },
     {
       "id": "photoshop",
       "name": "Photoshop",
       "abbr": "Ps",
       "icon": "data/images/skill_photoshop/1779747870098_Photoshop.png",
-      "level": 93,
+      "iconColor": "#000000",
+      "level": 100,
       "category": "2D Tools",
       "visible": true
     },
@@ -774,6 +782,7 @@
       "name": "Procreate",
       "abbr": "Pc",
       "icon": "data/images/skill_procreate/1779747874871_Procreate.png",
+      "iconColor": "#000000",
       "level": 90,
       "category": "2D Tools",
       "visible": true
@@ -783,7 +792,8 @@
       "name": "Illustrator",
       "abbr": "Ai",
       "icon": "data/images/skill_illustrator/1779747880483_Illustrator.png",
-      "level": 70,
+      "iconColor": "#000000",
+      "level": 22,
       "category": "2D Tools",
       "visible": true
     },
@@ -792,7 +802,8 @@
       "name": "Blender",
       "abbr": "Bl",
       "icon": "data/images/skill_blender/1779747885314_Blender.png",
-      "level": 88,
+      "iconColor": "#000000",
+      "level": 90,
       "category": "3D & Engine",
       "visible": true
     },
@@ -801,7 +812,8 @@
       "name": "Unreal Engine 5",
       "abbr": "UE",
       "icon": "data/images/skill_ue5/1779747891832_Unreal_.png",
-      "level": 80,
+      "iconColor": "#000000",
+      "level": 57,
       "category": "3D & Engine",
       "visible": true
     },
@@ -810,6 +822,7 @@
       "name": "Substance Painter",
       "abbr": "Sp",
       "icon": "data/images/skill_substance/1779747896836_Substance.png",
+      "iconColor": "#000000",
       "level": 74,
       "category": "3D & Engine",
       "visible": true
@@ -819,7 +832,8 @@
       "name": "Unity",
       "abbr": "Un",
       "icon": "data/images/skill_unity/1779747904083_Unity.png",
-      "level": 60,
+      "iconColor": "#000000",
+      "level": 49,
       "category": "3D & Engine",
       "visible": true
     },
@@ -828,7 +842,8 @@
       "name": "Fortnite UEFN",
       "abbr": "Fn",
       "icon": "data/images/skill_fortnite_uefn/1779747918160_Unreal_.png",
-      "level": 85,
+      "iconColor": "#000000",
+      "level": 75,
       "category": "Game Dev",
       "visible": true
     },
@@ -837,6 +852,7 @@
       "name": "Roblox Studio",
       "abbr": "Rb",
       "icon": "data/images/skill_roblox_studio/1779747923107_Roblox.png",
+      "iconColor": "#000000",
       "level": 78,
       "category": "Game Dev",
       "visible": true

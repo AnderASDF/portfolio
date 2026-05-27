@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Andrea Fanese — Concept Artist & 3D Generalist</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -114,10 +114,36 @@
 
 <!-- SKILLS -->
 <section id="skills">
-  <p class="section-label">Toolbox</p>
-  <h2 class="section-title">Skills & Tools</h2>
-  <p class="section-sub">Tools and disciplines I work with regularly.</p>
-  <div class="skills-layout">
+  <div class="skills-header">
+    <p class="section-label">Toolbox</p>
+    <h2 class="section-title">Skills &amp; <em style="color:var(--gold-light)">Tools</em></h2>
+    <p class="section-sub">Tools and disciplines I work with regularly.</p>
+  </div>
+
+  <div class="bubble-stage" id="bubble-stage">
+    <svg id="bubbles" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid meet" aria-label="Skills and tools bubble diagram">
+      <defs>
+        <filter id="sk-wobble" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3" result="t"/>
+          <feDisplacementMap in="SourceGraphic" in2="t" scale="2.2"/>
+        </filter>
+        <filter id="sk-wobble-mild" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="t"/>
+          <feDisplacementMap in="SourceGraphic" in2="t" scale="1.2"/>
+        </filter>
+        <filter id="sk-icon-trad" color-interpolation-filters="sRGB">
+          <feColorMatrix type="matrix" values="0 0 0 0 0.361  0 0 0 0 0.188  0 0 0 0 0.502  0 0 0 1 0"/>
+        </filter>
+        <filter id="sk-icon-dig" color-interpolation-filters="sRGB">
+          <feColorMatrix type="matrix" values="0 0 0 0 0.98  0 0 0 0 0.965  0 0 0 0 0.941  0 0 0 1 0"/>
+        </filter>
+      </defs>
+      <g id="bubble-layer"></g>
+    </svg>
+    <div class="skill-tooltip" id="skill-tooltip">
+      <span class="t-name">—</span>
+      <span class="t-cat">—</span>
+    </div>
   </div>
 </section>
 
@@ -154,8 +180,10 @@
   <img id="lightbox-img" src="" alt="">
 </div>
 
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="data/data.js"></script>
 <script src="wave.js"></script>
 <script src="script.js" defer></script>
+<script src="bubbles.js" defer></script>
 </body>
 </html>

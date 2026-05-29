@@ -161,7 +161,7 @@
             "Procreate",
             "Blender"
           ],
-          "sectionAspectRatio": "16/9",
+          "sectionAspectRatio": "auto",
           "bgImage": "data/images/sub_1779708234888/1780012231390_rkn_background.png"
         },
         {

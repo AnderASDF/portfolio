@@ -8,6 +8,7 @@
 <link rel="icon" type="image/png" href="images/propic.png">
 <link rel="apple-touch-icon" href="images/propic.png">
 <link rel="stylesheet" href="style.css">
+<script>(function(){var s=localStorage.getItem('pf-theme'),d=s?s==='dark':window.matchMedia('(prefers-color-scheme:dark)').matches;if(d)document.documentElement.classList.add('dark');})()</script>
 </head>
 <body>
 
@@ -19,6 +20,12 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li class="nav-theme-li">
+      <label class="theme-toggle" title="Toggle dark / light theme">
+        <input type="checkbox" id="theme-toggle-chk" onchange="toggleTheme()">
+        <span class="theme-track"><span class="theme-thumb"></span></span>
+      </label>
+    </li>
   </ul>
 </nav>
 

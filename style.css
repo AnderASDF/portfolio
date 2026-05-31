@@ -160,6 +160,7 @@ section{padding:100px 60px;}
 .modal-gallery.single{grid-template-columns:1fr;}
 .modal-tools{display:flex;gap:8px;flex-wrap:wrap;}
 .tool-badge{background:var(--mist);color:var(--purple-mid);font-size:12px;font-weight:600;padding:6px 14px;border-radius:2px;border:1px solid rgba(92,48,128,.15);}
+.section-title em{color:var(--gold-light);}
 .modal-link-wrap{margin-top:24px;padding-top:20px;border-top:1px solid rgba(61,32,80,.08);}
 .modal-body-sectioned.modal-no-nav .modal-sec-content{padding:10px 14px;}
 
@@ -187,7 +188,7 @@ section{padding:100px 60px;}
 .modal-left-panel .modal-sec-tool-icons{margin-left:auto;gap:4px;}
 .modal-left-panel .sec-tool-icon{width:26px;height:26px;}
 .modal-left-panel .sec-tool-icon img{width:20px;height:20px;filter:brightness(0) invert(1);}
-.modal-sec-block-header .sec-tool-icon img{filter:brightness(0) invert(1) brightness(.56) sepia(1) saturate(3.5) hue-rotate(231deg) saturate(.6) brightness(.376);}
+.modal-sec-block-header .sec-tool-icon img{filter:brightness(0) invert(1);}
 .modal-left-panel .sec-tool-icon>span{font-size:17px;}
 .modal-link-desktop{margin-top:auto;padding:16px 0;display:flex;justify-content:center;}
 .modal-link-mobile{display:none;}
@@ -436,3 +437,86 @@ section{padding:100px 60px;}
   /* Images area */
   .modal.modal-two-col .modal-sec-content{flex:1;min-height:0;padding:10px 14px;}
 }
+
+/* ── THEME TOGGLE ─────────────────────────────────────────────────────────── */
+.nav-theme-li{display:flex;align-items:center;margin-left:4px;}
+.theme-toggle{display:flex;align-items:center;cursor:pointer;user-select:none;}
+.theme-toggle input{display:none;}
+.theme-track{position:relative;width:42px;height:22px;border-radius:11px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);transition:background .25s,border-color .25s;flex-shrink:0;}
+.theme-toggle input:checked + .theme-track{background:rgba(201,146,43,.28);border-color:rgba(201,146,43,.5);}
+.theme-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.8);transition:transform .22s cubic-bezier(.34,1.56,.64,1),background .2s;}
+.theme-toggle input:checked + .theme-track .theme-thumb{transform:translateX(20px);background:var(--gold);}
+
+/* ── DARK MODE ────────────────────────────────────────────────────────────── */
+html.dark{
+  --cream:#1A1225;
+  --white:#211730;
+  --ink:#E8E0F5;
+  --mist:#2C1E40;
+  --gray:#9880B2;
+}
+
+/* Paper textures / divider */
+html.dark .paper-divider::before{opacity:0;}
+html.dark #about{background-image:none;}
+html.dark #projects{background-image:none;}
+html.dark #skills{background-image:none;}
+
+/* Contact section keeps a very dark bg */
+html.dark #contact{background:#0F0A1A;}
+
+/* Section titles on light sections */
+html.dark #experience .section-title,html.dark #contact .section-title{color:#f7e8ff;}
+
+/* About */
+html.dark .about-body{color:rgba(232,224,245,.72);}
+html.dark .chip{border-color:rgba(255,255,255,.1);}
+
+/* Skills bubbles */
+html.dark .b-circle.b-concept{fill:#F0EBE3;}
+html.dark .bubble:hover .b-circle.b-concept{fill:#F5F0E8;}
+html.dark .b-circle.b-gamedev{fill:#2A1B3D;}
+html.dark .bubble:hover .b-circle.b-gamedev{fill:#3A2A52;}
+html.dark .icon.trad{stroke:#3D3050;}
+html.dark .icon-text.trad{fill:#3D3050;}
+html.dark .b-rim.b-concept{stroke:var(--purple-light);}
+
+/* Filter bar */
+html.dark .filter-btn{color:rgba(232,224,245,.38);}
+html.dark .filter-btn:hover{color:var(--ink);}
+@media(max-width:1024px){
+  html.dark .filter-btn{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:rgba(232,224,245,.4);}
+  html.dark .filter-btn.active{background:var(--purple);border-color:var(--purple);color:#bfb4c5;}
+}
+
+/* Modal */
+html.dark .modal{background:var(--white);}
+html.dark .modal-left-title{color:#f7e8ff;}
+html.dark .modal-sec-nav{background:rgba(0,0,0,.18);border-right-color:rgba(255,255,255,.07);}
+html.dark .modal-sec-nav-item{color:rgba(232,224,245,.38);}
+html.dark .modal-sec-nav-item:hover{color:var(--purple-light);}
+html.dark .modal-sec-nav-item.active{color:var(--ink);}
+html.dark .nav-dot{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.16);}
+html.dark .modal-sec-nav-item:not(:first-child)::before,html.dark .modal-sec-nav-item:not(:last-child)::after{background:rgba(255,255,255,.12);}
+html.dark .modal-sec-nav-items::before{background:rgba(255,255,255,.1);}
+html.dark .modal-sec-desc,html.dark .modal-desc{color:rgba(232,224,245,.72);}
+html.dark .modal-sec-tools,html.dark .modal-link-wrap{border-top-color:rgba(255,255,255,.08);}
+html.dark .modal-sec-block-title{color:rgba(255,255,255,.7);}
+html.dark .modal-sec-block-header .sec-tool-icon img{filter:brightness(0) invert(1) sepia(1) hue-rotate(240deg) saturate(0.28) brightness(1.04);}
+html.dark .tool-badge{border-color:rgba(255,255,255,.12);}
+
+/* ── DARK MODE COLOUR OVERRIDES ───────────────────────────────────────────── */
+html.dark .nav-logo{color:#bfb4c5;}
+html.dark .hero-name{color:#f7e8ff;}
+html.dark .stat-number{color:#f7e8ff;}
+html.dark .btn-outline{color:#bfb4c5;border-color:rgba(191,180,197,.35);}
+html.dark .btn-outline:hover{border-color:#bfb4c5;}
+html.dark .section-title{color:#f7e8ff;}
+html.dark .chip.highlight{color:#bfb4c5;}
+html.dark .filter-btn.active{color:#bfb4c5;}
+html.dark .filter-btn.active::before{background:#bfb4c5;}
+html.dark .timeline-role{color:#bfb4c5;}
+html.dark .chip{color:#a898a6;}
+html.dark .card-name-main{color:#a898a6;opacity:1;}
+html.dark .card-name-sep{color:#a898a6;opacity:1;}
+html.dark .card-name-sub{color:#a898a6;}

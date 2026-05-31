@@ -118,7 +118,9 @@
         "data/images/new_1780043347962/1780049040530_zombie_damage.mp4||data/images/new_1780043347962/1780049040502_zombie_attack.mp4",
         "data/images/new_1780043347962/1780049040629_zombie_walk_.mp4||data/images/new_1780043347962/1780049040550_zombie_run.mp4"
       ],
-      "tools": [],
+      "tools": [
+        "Roblox Studio"
+      ],
       "link": null,
       "visible": true,
       "inSelection": true,

@@ -1259,7 +1259,26 @@ function renderSkills(skills) {
   }
 })()
 
+// ── THEME ─────────────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const isDark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('pf-theme', isDark ? 'dark' : 'light');
+  const chk = document.getElementById('theme-toggle-chk');
+  if (chk) chk.checked = isDark;
+}
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+  if (!localStorage.getItem('pf-theme')) {
+    document.documentElement.classList.toggle('dark', e.matches);
+    const chk = document.getElementById('theme-toggle-chk');
+    if (chk) chk.checked = e.matches;
+  }
+});
+
 window.addEventListener('DOMContentLoaded', () => {
+  const chk = document.getElementById('theme-toggle-chk');
+  if (chk) chk.checked = document.documentElement.classList.contains('dark');
+
   const lbStage = document.getElementById('lb-stage');
   if (lbStage) {
     lbStage.addEventListener('wheel',      _lbOnWheel,      { passive: false });

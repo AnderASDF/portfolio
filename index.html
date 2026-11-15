@@ -66,10 +66,11 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <div>
+  <div class="about-left">
     <h2 class="section-title">to be <em>fluid.</em></h2>
+    <div class="about-bubbles-slot" id="about-bubbles-slot"></div>
   </div>
-  <div>
+  <div class="about-right">
     <p class="about-body" id="about-p1">Born in a coastal city and a lifelong swimmer, fluidity shapes both my character and my digital workflow. As a concept artist and 3D generalist, I treat pipelines as adaptive environments, bridging 2D ideation—silhouettes, line art, colour finals—with full 3D implementation in Blender and Unreal Engine.</p>
     <p class="about-body" id="about-p2">This fluid approach allows me to take any form a project requires, moving seamlessly across stylized, dark fantasy, and horror aesthetics. My technical and artistic adaptability spans building characters from thumbnail to 3D model, designing weapons with silhouette-first pipelines, and shipping live maps on Fortnite and Roblox. Currently contributing as VFX & Weapon Concept Artist on an indie title with a 15-person team.</p>
     <p class="about-body" id="about-p3">Looking for a full-time position as a concept artist — ideally in a studio that values iterative design, creative collaboration, and strong world-building.</p>
@@ -119,7 +120,7 @@
   </div>
 </section>
 
-<div class="paper-divider"><img src="images/divider_paper.png" alt=""></div>
+<div class="paper-divider skills-divider"><img src="images/divider_paper.png" alt=""></div>
 
 <!-- SKILLS -->
 <section id="skills">
@@ -129,29 +130,31 @@
     <p class="section-sub" id="skills-subtitle">Tools and disciplines I work with regularly.</p>
   </div>
 
-  <div class="bubble-stage" id="bubble-stage">
-    <svg id="bubbles" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid meet" aria-label="Skills and tools bubble diagram">
-      <defs>
-        <filter id="sk-wobble" x="-10%" y="-10%" width="120%" height="120%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3" result="t"/>
-          <feDisplacementMap in="SourceGraphic" in2="t" scale="2.2"/>
-        </filter>
-        <filter id="sk-wobble-mild" x="-10%" y="-10%" width="120%" height="120%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="t"/>
-          <feDisplacementMap in="SourceGraphic" in2="t" scale="1.2"/>
-        </filter>
-        <filter id="sk-icon-trad" color-interpolation-filters="sRGB">
-          <feColorMatrix type="matrix" values="0 0 0 0 0.361  0 0 0 0 0.188  0 0 0 0 0.502  0 0 0 1 0"/>
-        </filter>
-        <filter id="sk-icon-dig" color-interpolation-filters="sRGB">
-          <feColorMatrix type="matrix" values="0 0 0 0 0.98  0 0 0 0 0.965  0 0 0 0 0.941  0 0 0 1 0"/>
-        </filter>
-      </defs>
-      <g id="bubble-layer"></g>
-    </svg>
-    <div class="skill-tooltip" id="skill-tooltip">
-      <span class="t-name">—</span>
-      <span class="t-cat">—</span>
+  <div id="skills-bubbles-slot">
+    <div class="bubble-stage" id="bubble-stage">
+      <svg id="bubbles" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid meet" aria-label="Skills and tools bubble diagram">
+        <defs>
+          <filter id="sk-wobble" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3" result="t"/>
+            <feDisplacementMap in="SourceGraphic" in2="t" scale="2.2"/>
+          </filter>
+          <filter id="sk-wobble-mild" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="t"/>
+            <feDisplacementMap in="SourceGraphic" in2="t" scale="1.2"/>
+          </filter>
+          <filter id="sk-icon-trad" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 0.361  0 0 0 0 0.188  0 0 0 0 0.502  0 0 0 1 0"/>
+          </filter>
+          <filter id="sk-icon-dig" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 0.98  0 0 0 0 0.965  0 0 0 0 0.941  0 0 0 1 0"/>
+          </filter>
+        </defs>
+        <g id="bubble-layer"></g>
+      </svg>
+      <div class="skill-tooltip" id="skill-tooltip">
+        <span class="t-name">—</span>
+        <span class="t-cat">—</span>
+      </div>
     </div>
   </div>
 </section>

@@ -62,9 +62,31 @@
   const stage = document.getElementById('bubble-stage');
   const svgEl = document.getElementById('bubbles');
 
+  // Helper to sync bubble stage location between desktop and mobile
+  function syncStageSlot() {
+    const isDesktop = window.matchMedia('(min-width: 901px)').matches;
+    const aboutSlot = document.getElementById('about-bubbles-slot');
+    const skillsSlot = document.getElementById('skills-bubbles-slot');
+    const targetSlot = isDesktop ? aboutSlot : skillsSlot;
+    if (targetSlot && stage.parentElement !== targetSlot) {
+      targetSlot.appendChild(stage);
+    }
+  }
+  syncStageSlot();
+
   function computeDims() {
-    const W = Math.max(320, stage.clientWidth || window.innerWidth);
-    const H = Math.max(MIN_H, Math.min(MAX_H, STAGE_AREA / W));
+    const isAbout = !!stage.closest('#about');
+    let W, H;
+    if (isAbout) {
+      W = Math.max(320, stage.clientWidth || 440);
+      const rightCol = document.querySelector('.about-right');
+      const title = document.querySelector('#about .section-title');
+      const targetH = rightCol && title ? (rightCol.offsetHeight - title.offsetHeight - 12) : 480;
+      H = Math.max(360, targetH);
+    } else {
+      W = Math.max(320, stage.clientWidth || window.innerWidth);
+      H = Math.max(MIN_H, Math.min(MAX_H, STAGE_AREA / W));
+    }
     return { W: Math.round(W), H: Math.round(H) };
   }
 
@@ -74,12 +96,13 @@
 
   // ── 3) catCenters – anello compatto + seed ─────────────────────────
   function catCenters(W, H, seed) {
+    const isAbout = !!stage.closest('#about');
     const cx = W / 2, cy = H / 2;
     const cats = ['Concept Art', '2D Tools', '3D & Engine', 'Game Dev'];
     const rng = mulberry32((seed >>> 0) || 1);
     const order = seededShuffle(cats, rng);
     const rot = rng() * Math.PI * 2;
-    const ringR = CONTENT_R * 0.62;
+    const ringR = CONTENT_R * (isAbout ? 0.58 : 0.62);
     const out = {};
     order.forEach((cat, i) => {
       const ang = rot + (i / cats.length) * Math.PI * 2;
@@ -266,6 +289,7 @@
   // ── Resize (aggiorna centers + forze con stesso seed) ─────────────
   let resizeTimer;
   function onResize() {
+    syncStageSlot();
     tooltip.classList.remove('active');
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
@@ -284,4 +308,20 @@
 
   window.addEventListener('resize', onResize);
   if (window.ResizeObserver) new ResizeObserver(onResize).observe(stage);
+
+  const mql = window.matchMedia('(min-width: 901px)');
+  if (mql.addEventListener) {
+    mql.addEventListener('change', onResize);
+  } else if (mql.addListener) {
+    mql.addListener(onResize);
+  }
+
+  document.querySelectorAll('a[href="#skills"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.matchMedia('(min-width: 901px)').matches) {
+        e.preventDefault();
+        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 })();

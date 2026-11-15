@@ -104,19 +104,19 @@
       "title": "Zombie Roblox",
       "date": "",
       "status": "wip",
-      "team": "",
+      "team": "Roblox",
       "tags": [],
       "filterTags": "",
       "cardSize": "default",
       "coverImage": "data/images/new_1780043347962/1780046163245_zombie_roblox.png",
       "sub": "",
-      "cardDesc": "",
-      "description": "",
+      "cardDesc": "Commissioned project delivering custom zombie characters utilizing the Roblox R15 rig standard. Handled the complete asset production pipeline, including 3D modeling, texturing, and custom animations.",
+      "description": "Professional commission focused on the design and technical deployment of zombie characters optimized for the Roblox platform using the R15 rig system, encompassing the engineering of optimized engine-ready character meshes, custom texturing to establish the visual aesthetic while adhering to strict performance budgets, and the development of custom character animations for seamless real-time integration.",
       "images": [
         "data/images/new_1780043347962/1780046163245_zombie_roblox.png",
-        "data/images/new_1780043347962/1780043935639_zombie_draft2.png||data/images/new_1780043347962/1780049040602_zombie_spawn.mp4",
-        "data/images/new_1780043347962/1780049040530_zombie_damage.mp4||data/images/new_1780043347962/1780049040502_zombie_attack.mp4",
-        "data/images/new_1780043347962/1780049040629_zombie_walk_.mp4||data/images/new_1780043347962/1780049040550_zombie_run.mp4"
+        "data/images/new_1780043347962/1780043935639_zombie_draft2.png||data/images/new_1780043347962/1780313614959_zombie_run.gif",
+        "data/images/new_1780043347962/1780313615092_zombie_spawn.gif||data/images/new_1780043347962/1780313615126_zombie_walk_.gif",
+        "data/images/new_1780043347962/1780313614730_zombie_attack.gif||data/images/new_1780043347962/1780313614924_zombie_damage.gif"
       ],
       "tools": [
         "Roblox Studio"
@@ -509,7 +509,7 @@
     },
     {
       "id": "backrooms",
-      "title": "Backrooms — Fortnite Creative 2.0",
+      "title": "Backrooms",
       "date": "2025",
       "status": "unreleased",
       "team": "Studio Neptune — Fortnite Creative 2.0",
@@ -519,19 +519,13 @@
         "Environment",
         "Published"
       ],
-      "filterTags": "character creature 3d environment fortnite",
-      "cardSize": "default",
-      "coverImage": "data/images/backrooms/1780051490443_Screenshot_2025-06-27_211006.png",
+      "filterTags": "",
+      "cardSize": null,
+      "coverImage": "",
       "sub": "Fortnite UEFN · 2024 · 3D Assets & Environment",
       "cardDesc": "Environment design and full character/creature roster — from concept through final 3D implementation on Fortnite Creative 2.0.",
       "description": "The last project developed for Fortnite Creative 2.0. Like the other Studio Neptune projects, this covered both the environment design and all characters and creatures — from concept through to final 3D model implementation. Assets include a yellow robot guard character, a humanoid creature sculpt, environment props, and game UI icons. Published and playable on Fortnite.",
-      "images": [
-        "data/images/backrooms/1780051490443_Screenshot_2025-06-27_211006.png",
-        "data/images/backrooms/1780051490120_Screenshot_2025-06-27_210725.png",
-        "data/images/backrooms/1780051507776_Screenshot_2025-06-27_211006.png",
-        "data/images/backrooms/1780051489786_Screenshot_2025-06-04_153521.png||data/images/backrooms/1780051489394_Portfolio_2026_-_Andrea_Fanese.png",
-        "data/images/backrooms/1780051489457_Screenshot_2025-05-20_123656.png||data/images/backrooms/1780051489537_Screenshot_2025-06-03_125054.png"
-      ],
+      "images": [],
       "tools": [
         "Blender",
         "Unreal Engine 5 (UEFN)",
@@ -541,11 +535,53 @@
       ],
       "link": null,
       "visible": true,
-      "inSelection": true,
+      "inSelection": false,
       "sectionAspectRatio": "auto",
       "bgImage": "",
       "showInTimeline": false,
-      "subprojects": []
+      "subprojects": [
+        {
+          "id": "sub_1780311093922",
+          "title": "Creatures",
+          "order": 1,
+          "coverImage": "data/images/sub_1780311093922/1780311186900_Screenshot_2025-06-04_153521.png",
+          "images": [
+            "data/images/sub_1780311093922/1780311186900_Screenshot_2025-06-04_153521.png",
+            "data/images/sub_1780311093922/1780311179250_Portfolio_2026_-_Andrea_Fanese.png",
+            "data/images/sub_1780311093922/1780311179378_Screenshot_2025-05-20_123656.png||data/images/sub_1780311093922/1780311179462_Screenshot_2025-06-03_125054.png",
+            "data/images/sub_1780311093922/1780311179672_Screenshot_2025-06-04_153521.png"
+          ],
+          "tags": [],
+          "filterTags": "",
+          "cardSize": "default",
+          "inSelection": true,
+          "visible": true,
+          "description": "",
+          "tools": [],
+          "sectionAspectRatio": "4/3",
+          "bgImage": ""
+        },
+        {
+          "id": "sub_1780311103289",
+          "title": "Environments",
+          "order": 2,
+          "coverImage": "data/images/sub_1780311103289/1780311163379_Screenshot_2025-06-27_211006.png",
+          "images": [
+            "data/images/sub_1780311103289/1780311163379_Screenshot_2025-06-27_211006.png",
+            "data/images/sub_1780311103289/1780311157037_Screenshot_2025-06-27_210725.png",
+            "data/images/sub_1780311103289/1780311157694_Screenshot_2025-06-27_211006.png"
+          ],
+          "tags": [],
+          "filterTags": "",
+          "cardSize": "default",
+          "inSelection": true,
+          "visible": true,
+          "description": "",
+          "tools": [],
+          "sectionAspectRatio": "auto",
+          "bgImage": ""
+        }
+      ]
     },
     {
       "id": "comune041",

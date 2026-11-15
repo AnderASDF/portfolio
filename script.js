@@ -232,17 +232,17 @@ function renderSectionedModal(p, sectionId, bodyEl) {
     const bgSrc   = s.bg ? resolveImageSrc(s.bg) : '';
     const _bgIsGrad = bgSrc.startsWith('linear-gradient') || bgSrc.startsWith('radial-gradient');
     const bgPart  = bgSrc ? (_bgIsGrad ? `background:${bgSrc};` : `background:url(${bgSrc}) center/cover no-repeat;`) : (arPart ? 'background:rgba(0,0,0,.03);' : '');
-    const imgStyle = (arPart || bgPart) ? ` style="${arPart}${bgPart}"` : '';
+    const cellBgFull = bgSrc ? (_bgIsGrad ? `background:${bgSrc};` : `background:url(${bgSrc}) center/cover no-repeat;`) : '';
     // pair cells: fixed aspect-ratio (uses section ar, defaults to 3/2) so both halves have the same height
     const pairAr   = (s.ar && s.ar !== 'auto') ? s.ar : '3/2';
-    const cellBg   = bgSrc ? (_bgIsGrad ? `background:${bgSrc};` : `background:url(${bgSrc}) center/cover no-repeat;`) : '';
     const pairCell = (src, t) => {
       if (!src) return '';
       const pSrc = previewSrc(src);
+      const thisCellBg = _isPng(src) ? cellBgFull : '';
       const inner = _isVideo(src)
-        ? `<video src="${src}" controls playsinline loop onclick="event.stopPropagation()" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;"></video>`
-        : `<img src="${pSrc}" alt="${t}" onclick="openLightbox('${src}')" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;"${pSrc !== src ? ` onerror="this.onerror=null;this.src='${src}'"` : ''}>`;
-      return `<div class="modal-pair-cell" style="aspect-ratio:${pairAr};position:relative;${cellBg}">${inner}</div>`;
+        ? `<video src="${src}" controls playsinline loop onclick="event.stopPropagation()" style="width:100%;height:auto;display:block;"></video>`
+        : `<img src="${pSrc}" alt="${t}" onclick="openLightbox('${src}')" style="width:100%;height:auto;display:block;"${pSrc !== src ? ` onerror="this.onerror=null;this.src='${src}'"` : ''}>`;
+      return `<div class="modal-pair-cell" style="${thisCellBg}">${inner}</div>`;
     };
     const imgs = s.images.filter(key => key !== s.coverImage && key !== s.bg).flatMap(key => {
       if (key.includes('||')) {
@@ -255,6 +255,8 @@ function renderSectionedModal(p, sectionId, bodyEl) {
       if (_isVideo(src)) return [`<video class="modal-video" src="${src}" controls playsinline loop onclick="event.stopPropagation()"></video>`];
       const pSrc = previewSrc(src);
       const hasPreview = pSrc !== src;
+      const imgBg = _isPng(src) ? bgPart : '';
+      const imgStyle = (arPart || imgBg) ? ` style="${arPart}${imgBg}"` : '';
       return [`<img src="${hasPreview ? pSrc : src}" alt="${s.title}"${imgStyle} onclick="openLightbox('${src}')"${hasPreview ? ` onerror="this.onerror=null;this.src='${src}'"` : ''}>`];
     }).join('');
     const headerInner = `<span class="modal-sec-block-title">${s.title}</span>` +
@@ -348,6 +350,7 @@ function closeModalBtn() {
 
 // ── LIGHTBOX ──────────────────────────────────────────────────────
 function _isVideo(src) { return /\.(mp4|webm|ogg)$/i.test(src); }
+function _isPng(src) { return /\.png(\?|$)/i.test(src); }
 
 let _lbS = 1, _lbTx = 0, _lbTy = 0, _lbFitS = 1;
 let _lbDrag = null, _lbMoved = false, _lbPinchDist = null;
@@ -529,19 +532,14 @@ function equalizePairCells(pair) {
       ? (el.videoWidth && el.videoHeight ? el.videoWidth / el.videoHeight : 0)
       : (el.naturalWidth && el.naturalHeight ? el.naturalWidth / el.naturalHeight : 0);
     const v = read(); if (v) { resolve(v); return; }
+    // No error listener: if preview fails, onerror on the element changes src to original,
+    // which fires a new load event — this listener catches that too.
     el.addEventListener(el.tagName === 'VIDEO' ? 'loadedmetadata' : 'load', () => resolve(read()), { once: true });
-    el.addEventListener('error', () => resolve(0), { once: true });
   });
   Promise.all([getRatio(elA), getRatio(elB)]).then(([rA, rB]) => {
     if (!rA || !rB) return;
-    [cells[0], cells[1]].forEach((cell, i) => {
-      const r = i === 0 ? rA : rB;
-      cell.style.flex = r;
-      cell.style.aspectRatio = r;
-      cell.style.position = 'relative';
-      const el = getEl(cell);
-      if (el) { el.style.position = 'absolute'; el.style.inset = '0'; el.style.width = '100%'; el.style.height = '100%'; }
-    });
+    cells[0].style.flex = rA;
+    cells[1].style.flex = rB;
   });
 }
 
@@ -559,15 +557,24 @@ function getCardMap(cards) {
 function applyViewSettings() {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
+  const isDesktop = window.innerWidth > 900;
   const gs = window.PORTFOLIO_DATA?.gridSettings || {};
-  grid.style.gridTemplateColumns = `repeat(${gs.columns||6},1fr)`;
-  const [w,h] = (gs.aspectRatio||'3/2').split('/').map(Number);
-  document.querySelectorAll('.project-card').forEach(card => {
-    if (card.classList.contains('vertical')) return;
-    const span = card.classList.contains('wide')?3:card.classList.contains('featured')?2:1;
-    card.style.aspectRatio = `${w*span}/${h}`;
-  });
+  if (isDesktop) {
+    grid.style.gridTemplateColumns = `repeat(${gs.columns||6},1fr)`;
+    const [w,h] = (gs.aspectRatio||'3/2').split('/').map(Number);
+    document.querySelectorAll('.project-card').forEach(card => {
+      if (card.classList.contains('vertical')) return;
+      const span = card.classList.contains('wide')?3:card.classList.contains('featured')?2:1;
+      card.style.aspectRatio = `${w*span}/${h}`;
+    });
+  } else {
+    grid.style.gridTemplateColumns = '';
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.style.aspectRatio = '';
+    });
+  }
 }
+window.addEventListener('resize', applyViewSettings, { passive: true });
 
 function randRot() { return Math.round((Math.random()-0.5)*90)+'deg'; }
 
@@ -635,7 +642,8 @@ function filterByView(viewId, btn) {
 
   applyViewSettings();
   updateVisibleIds();
-  requestAnimationFrame(() => requestAnimationFrame(() => { grid.style.opacity = '1'; }));
+  grid.style.opacity = '1';
+  requestAnimationFrame(() => { grid.style.opacity = '1'; });
 }
 
 // backward-compat alias

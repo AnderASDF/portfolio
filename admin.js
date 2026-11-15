@@ -4,7 +4,7 @@ const fs      = require('fs')
 const path    = require('path')
 
 const app      = express()
-const PORT     = 3001
+const PORT     = 5001
 const ROOT     = __dirname
 const DATA_FILE = path.join(ROOT, 'data', 'data.json')
 const DATA_JS   = path.join(ROOT, 'data', 'data.js')

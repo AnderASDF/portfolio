@@ -101,7 +101,7 @@
     },
     {
       "id": "new_1780043347962",
-      "title": "Zombie Roblox",
+      "title": "Roblox Works",
       "date": "",
       "status": "wip",
       "team": "Roblox",
@@ -201,7 +201,7 @@
         },
         {
           "id": "sub_1779708490933",
-          "title": "Demon Character",
+          "title": "Demon",
           "order": 2,
           "coverImage": "data/images/sub_1779708490933/1779803517808_cover_rkn_demon.png",
           "images": [
@@ -228,7 +228,7 @@
         },
         {
           "id": "sub_1779739945418",
-          "title": "Main Characters",
+          "title": "Characters",
           "order": 3,
           "coverImage": "data/images/sub_1779739945418/1780016231409_cover_rkn_characters.png",
           "images": [
@@ -704,7 +704,7 @@
       "id": "indie_studio",
       "period": "2025 – Present",
       "role": "VFX & Weapon Concept Artist",
-      "company": "Indie Studio (Confidential) — 15-person team",
+      "company": "Indie Studio (Confidential)",
       "bullets": [
         "Designing VFX and weapon concept sheets for an unreleased title in active production.",
         "Maintaining visual consistency across weapon systems in close collaboration with the art lead."

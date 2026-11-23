@@ -240,7 +240,7 @@ function renderSectionedModal(p, sectionId, bodyEl) {
       const pSrc = previewSrc(src);
       const thisCellBg = _isPng(src) ? cellBgFull : '';
       const inner = _isVideo(src)
-        ? `<video src="${src}" controls playsinline loop onclick="event.stopPropagation()" style="width:100%;height:auto;display:block;"></video>`
+        ? `<video src="${src}" controls playsinline loop muted autoplay onclick="event.stopPropagation()" style="width:100%;height:auto;display:block;"></video>`
         : `<img src="${pSrc}" alt="${t}" onclick="openLightbox('${src}')" style="width:100%;height:auto;display:block;"${pSrc !== src ? ` onerror="this.onerror=null;this.src='${src}'"` : ''}>`;
       return `<div class="modal-pair-cell" style="${thisCellBg}">${inner}</div>`;
     };
@@ -252,7 +252,7 @@ function renderSectionedModal(p, sectionId, bodyEl) {
         return [`<div class="modal-img-pair">${pairCell(sA,s.title)}${pairCell(sB,s.title)}</div>`];
       }
       const src = resolveImageSrc(key); if (!src) return [];
-      if (_isVideo(src)) return [`<video class="modal-video" src="${src}" controls playsinline loop onclick="event.stopPropagation()"></video>`];
+      if (_isVideo(src)) return [`<video class="modal-video" src="${src}" controls playsinline loop muted autoplay onclick="event.stopPropagation()"></video>`];
       const pSrc = previewSrc(src);
       const hasPreview = pSrc !== src;
       const imgBg = _isPng(src) ? bgPart : '';
@@ -280,7 +280,40 @@ function renderSectionedModal(p, sectionId, bodyEl) {
       content.scrollTop = Math.max(0, top - 20);
     }
     setupSectionScrollSpy();
+    initModalVideoAutoplay();
   });
+}
+
+let _modalVideoObserver = null;
+
+function initModalVideoAutoplay() {
+  if (_modalVideoObserver) {
+    _modalVideoObserver.disconnect();
+    _modalVideoObserver = null;
+  }
+  const content = document.getElementById('modal-sec-content');
+  if (!content) return;
+
+  const videos = content.querySelectorAll('video');
+  if (!videos.length) return;
+
+  _modalVideoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const vid = entry.target;
+      if (entry.isIntersecting) {
+        vid.muted = true;
+        const p = vid.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      } else {
+        vid.pause();
+      }
+    });
+  }, {
+    root: content,
+    threshold: 0.25
+  });
+
+  videos.forEach(v => _modalVideoObserver.observe(v));
 }
 
 let _secScrollLock = false, _secScrollTimer = null;
@@ -332,6 +365,14 @@ function closeModal(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModalBtn();
 }
 function closeModalBtn() {
+  if (_modalVideoObserver) {
+    _modalVideoObserver.disconnect();
+    _modalVideoObserver = null;
+  }
+  document.querySelectorAll('#modal video').forEach(v => {
+    v.pause();
+    v.currentTime = 0;
+  });
   const modal = document.getElementById('modal');
   document.getElementById('modal-overlay').classList.remove('open');
   const _sy = parseInt(document.body.dataset.scrollY || '0');
